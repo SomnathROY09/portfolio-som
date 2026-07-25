@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DreamWish Studio — Custom Birthday &amp; Surprise Websites</title>
+<meta name="description" content="DreamWish Studio designs custom animated birthday, anniversary and proposal websites — personal digital surprises with photos, music and memories, delivered fast.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#0a0613;
+  --bg-1:#12081f;
+  --bg-2:#1a0e2b;
+  --purple:#8b5cf6;
+  --purple-deep:#6d28d9;
+  --pink:#ec4899;
+  --blue:#4f8cff;
+  --gold:#f0c674;
+  --gold-deep:#d4af37;
+  --glass:rgba(255,255,255,0.055);
+  --glass-brd:rgba(255,255,255,0.11);
+  --text:#f6f3fb;
+  --muted:#b6a9d1;
+  --muted-2:#8b7ba8;
+  --display:'Fraunces', serif;
+  --body:'Outfit', sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg-0);
+  color:var(--text);
+  font-family:var(--body);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+}
+
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:none;}
+::selection{background:var(--pink);color:#fff;}
+
+:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+.container{
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 24px;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:0.72rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:600;
+  margin-bottom:18px;
+}
+.eyebrow::before{
+  content:'';
+  width:22px;height:1px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+h1,h2,h3,h4{font-family:var(--display);font-weight:500;letter-spacing:-0.01em;}
+.section-title{
+  font-size:clamp(1.9rem,4vw,2.9rem);
+  margin-bottom:14px;
+  color:#fff;
+}
+.section-sub{
+  color:var(--muted);
+  max-width:560px;
+  font-size:1rem;
+}
+.section{
+  position:relative;
+  padding:120px 0;
+}
+.section-head{
+  text-align:center;
+  margin:0 auto 64px;
+  max-width:640px;
+}
+.section-head .section-sub{margin:0 auto;}
+
+/* ---------- background atmosphere ---------- */
+.bg-atmosphere{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.bg-atmosphere::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 900px 600px at 15% -5%, rgba(139,92,246,0.35), transparent 60%),
+    radial-gradient(ellipse 800px 700px at 90% 10%, rgba(236,72,153,0.25), transparent 60%),
+    radial-gradient(ellipse 700px 700px at 50% 100%, rgba(79,140,255,0.18), transparent 60%),
+    var(--bg-0);
+}
+.grain{
+  position:absolute;inset:0;
+  opacity:0.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(70px);
+  opacity:0.5;
+}
+
+/* ---------- navbar ---------- */
+header{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  padding:18px 0;
+  transition:all .4s var(--ease);
+}
+header.scrolled{
+  padding:12px 0;
+  background:rgba(10,6,19,0.65);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid var(--glass-brd);
+}
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  font-family:var(--display);
+  font-size:1.35rem;
+  font-weight:600;
+  display:flex;align-items:center;gap:10px;
+}
+.logo-mark{
+  width:34px;height:34px;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--gold),var(--pink) 55%,var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  box-shadow:0 4px 18px rgba(236,72,153,0.35);
+}
+.nav-links{
+  display:flex;
+  gap:34px;
+  font-size:0.92rem;
+  color:var(--muted);
+}
+.nav-links a{transition:color .25s;position:relative;}
+.nav-links a:hover{color:#fff;}
+.nav-cta{
+  display:flex;align-items:center;gap:16px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:13px 26px;
+  border-radius:100px;
+  font-size:0.9rem;
+  font-weight:600;
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s;
+  white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(120deg,var(--purple-deep),var(--pink) 55%,var(--gold-deep));
+  background-size:180% 180%;
+  color:#fff;
+  box-shadow:0 8px 30px rgba(139,92,246,0.35);
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(236,72,153,0.45);
+  background-position:100% 50%;
+}
+.btn-ghost{
+  background:var(--glass);
+  border:1px solid var(--glass-brd);
+  color:#fff;
+  backdrop-filter:blur(10px);
+}
+.btn-ghost:hover{
+  background:rgba(255,255,255,0.1);
+  transform:translateY(-2px);
+}
+.btn-small{padding:10px 20px;font-size:0.82rem;}
+.menu-toggle{display:none;background:none;color:#fff;font-size:1.4rem;}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:150px 0 90px;
+  z-index:1;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.05fr 0.95fr;
+  gap:60px;
+  align-items:center;
+}
+.hero-copy .eyebrow{color:var(--gold);}
+.hero h1{
+  font-size:clamp(2.4rem,5.2vw,4.1rem);
+  line-height:1.08;
+  color:#fff;
+  margin-bottom:26px;
+}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(100deg,var(--gold) 10%,var(--pink) 55%,var(--purple));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero p.lead{
+  color:var(--muted);
+  font-size:1.12rem;
+  max-width:520px;
+  margin-bottom:38px;
+}
+.hero-actions{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:46px;
+}
+.hero-trust{
+  display:flex;
+  gap:34px;
+  flex-wrap:wrap;
+}
+.trust-item{}
+.trust-item strong{
+  display:block;
+  font-family:var(--display);
+  font-size:1.6rem;
+  background:linear-gradient(100deg,#fff,var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.trust-item span{font-size:0.78rem;color:var(--muted-2);letter-spacing:0.04em;text-transform:uppercase;}
+
+/* hero visual: mock browser "gift" preview */
+.hero-visual{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:1400px;
+}
+.mock-browser{
+  width:100%;
+  max-width:430px;
+  border-radius:20px;
+  background:linear-gradient(160deg,rgba(255,255,255,0.09),rgba(255,255,255,0.02));
+  border:1px solid var(--glass-brd);
+  backdrop-filter:blur(20px);
+  box-shadow:0 40px 90px -20px rgba(20,6,40,0.7), 0 0 0 1px rgba(255,255,255,0.02);
+  transform:rotateY(-10deg) rotateX(6deg) rotate(-1deg);
+  animation:floaty 7s ease-in-out infinite;
+  overflow:hidden;
+}
+@keyframes floaty{
+  0%,100%{transform:rotateY(-10deg) rotateX(6deg) rotate(-1deg) translateY(0px);}
+  50%{transform:rotateY(-7deg) rotateX(4deg) rotate(-1deg) translateY(-14px);}
+}
+.mock-topbar{
+  display:flex;align-items:center;gap:6px;
+  padding:13px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.mock-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.18);}
+.mock-body{
+  padding:34px 26px 40px;
+  text-align:center;
+  position:relative;
+  min-height:400px;
+  background:
+    radial-gradient(circle at 50% 15%, rgba(240,198,116,0.18), transparent 55%),
+    radial-gradient(circle at 20% 80%, rgba(236,72,153,0.18), transparent 55%),
+    radial-gradient(circle at 85% 75%, rgba(139,92,246,0.22), transparent 55%);
+}
+.mock-badge{
+  display:inline-block;
+  font-size:0.65rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid rgba(240,198,116,0.35);
+  padding:5px 12px;
+  border-radius:100px;
+  margin-bottom:18px;
+}
+.mock-body h3{
+  font-size:1.7rem;
+  color:#fff;
+  margin-bottom:8px;
+}
+.mock-body p{color:var(--muted);font-size:0.88rem;margin-bottom:26px;}
+.candle-wrap{
+  display:flex;justify-content:center;gap:10px;margin-bottom:22px;
+}
+.candle{
+  width:6px;height:34px;
+  border-radius:3px;
+  background:linear-gradient(180deg,var(--gold),var(--pink));
+  position:relative;
+}
+.candle::before{
+  content:'';
+  position:absolute;
+  top:-14px;left:50%;
+  transform:translateX(-50%);
+  width:9px;height:14px;
+  border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  background:radial-gradient(circle at 50% 30%, #fff8dc, var(--gold) 55%, transparent 80%);
+  animation:flicker 1.6s ease-in-out infinite;
+  filter:blur(0.3px);
+}
+.candle:nth-child(2)::before{animation-delay:.3s;}
+.candle:nth-child(3)::before{animation-delay:.6s;}
+@keyframes flicker{
+  0%,100%{opacity:1;transform:translateX(-50%) scale(1);}
+  50%{opacity:0.75;transform:translateX(-50%) scale(0.85) rotate(3deg);}
+}
+.mock-photos{
+  display:flex;justify-content:center;gap:10px;
+}
+.mock-photo{
+  width:52px;height:52px;
+  border-radius:12px;
+  border:2px solid rgba(255,255,255,0.25);
+}
+.mock-photo:nth-child(1){background:linear-gradient(145deg,var(--purple),var(--purple-deep));}
+.mock-photo:nth-child(2){background:linear-gradient(145deg,var(--pink),#a3316f);transform:translateY(-6px) scale(1.08);}
+.mock-photo:nth-child(3){background:linear-gradient(145deg,var(--gold),var(--gold-deep));}
+
+.particles{position:absolute;inset:0;overflow:visible;pointer-events:none;}
+.particle{
+  position:absolute;
+  border-radius:50%;
+  opacity:0.7;
+  animation:drift linear infinite;
+}
+@keyframes drift{
+  0%{transform:translateY(0) translateX(0) scale(1);opacity:0;}
+  10%{opacity:0.8;}
+  90%{opacity:0.5;}
+  100%{transform:translateY(-620px) translateX(30px) scale(0.6);opacity:0;}
+}
+
+/* ---------- marquee strip ---------- */
+.marquee-strip{
+  border-top:1px solid var(--glass-brd);
+  border-bottom:1px solid var(--glass-brd);
+  padding:20px 0;
+  overflow:hidden;
+  position:relative;
+  background:rgba(255,255,255,0.02);
+}
+.marquee-track{
+  display:flex;
+  gap:56px;
+  width:max-content;
+  animation:scroll-left 28s linear infinite;
+  font-family:var(--display);
+  font-size:1.05rem;
+  color:var(--muted-2);
+  white-space:nowrap;
+}
+.marquee-track span{display:flex;align-items:center;gap:14px;}
+.marquee-track .dot{color:var(--gold);}
+@keyframes scroll-left{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+
+/* ---------- glass card base ---------- */
+.glass{
+  background:var(--glass);
+  border:1px solid var(--glass-brd);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-radius:22px;
+}
+
+/* ---------- services ---------- */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:26px;
+}
+.service-card{
+  padding:38px 30px;
+  position:relative;
+  transition:transform .45s var(--ease), border-color .45s, background .45s;
+  overflow:hidden;
+}
+.service-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(300px 200px at var(--mx,50%) var(--my,0%), rgba(236,72,153,0.16), transparent 70%);
+  opacity:0;
+  transition:opacity .4s;
+}
+.service-card:hover::before{opacity:1;}
+.service-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(240,198,116,0.4);
+}
+.service-icon{
+  width:54px;height:54px;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:22px;
+  background:linear-gradient(135deg,rgba(139,92,246,0.35),rgba(236,72,153,0.35));
+  border:1px solid rgba(255,255,255,0.15);
+  color:var(--gold);
+  position:relative;
+  z-index:1;
+}
+.service-card h3{font-size:1.2rem;color:#fff;margin-bottom:10px;position:relative;z-index:1;}
+.service-card p{color:var(--muted);font-size:0.92rem;position:relative;z-index:1;}
+.service-card .tag{
+  position:relative;z-index:1;
+  display:inline-block;
+  margin-top:18px;
+  font-size:0.74rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+
+/* ---------- demo showcase ---------- */
+.demo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:26px;
+}
+.demo-card{
+  overflow:hidden;
+  position:relative;
+  transition:transform .5s var(--ease);
+}
+.demo-card:hover{transform:translateY(-8px);}
+.demo-preview{
+  height:230px;
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.demo-preview.p1{background:radial-gradient(circle at 30% 20%,rgba(240,198,116,0.4),transparent 60%),linear-gradient(150deg,#3a1550,#1a0e2b);}
+.demo-preview.p2{background:radial-gradient(circle at 70% 30%,rgba(236,72,153,0.4),transparent 60%),linear-gradient(150deg,#4a1030,#160a22);}
+.demo-preview.p3{background:radial-gradient(circle at 50% 70%,rgba(79,140,255,0.4),transparent 60%),linear-gradient(150deg,#101a3a,#0e0c26);}
+.demo-preview .glow-icon{
+  font-size:2.6rem;
+  filter:drop-shadow(0 6px 20px rgba(0,0,0,0.4));
+}
+.demo-preview::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%, rgba(10,6,19,0.85));
+}
+.demo-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:20px 22px;
+  z-index:2;
+}
+.demo-overlay .cat{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.demo-overlay h4{color:#fff;font-size:1.15rem;font-family:var(--display);}
+.demo-body{
+  padding:22px;
+}
+.demo-body p{color:var(--muted);font-size:0.88rem;margin-bottom:16px;}
+.preview-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:0.85rem;font-weight:600;color:var(--gold);
+  transition:gap .3s;
+}
+.preview-btn:hover{gap:12px;}
+
+/* ---------- why choose ---------- */
+.why-wrap{
+  display:grid;
+  grid-template-columns:0.9fr 1.1fr;
+  gap:70px;
+  align-items:center;
+}
+.why-feats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.why-feat{
+  padding:22px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  transition:transform .4s var(--ease),border-color .4s;
+}
+.why-feat:hover{transform:translateY(-5px);border-color:rgba(139,92,246,0.5);}
+.why-check{
+  flex:none;
+  width:28px;height:28px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--pink));
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;color:#1a0e2b;font-weight:700;
+}
+.why-feat h4{font-size:0.98rem;color:#fff;margin-bottom:4px;}
+.why-feat p{font-size:0.82rem;color:var(--muted-2);}
+
+/* ---------- pricing ---------- */
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:26px;
+  align-items:stretch;
+}
+.price-card{
+  padding:38px 32px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  transition:transform .45s var(--ease);
+}
+.price-card:hover{transform:translateY(-10px);}
+.price-card.featured{
+  border-image:linear-gradient(160deg,var(--gold),var(--pink),var(--purple)) 1;
+  background:linear-gradient(160deg,rgba(240,198,116,0.09),rgba(236,72,153,0.06));
+  transform:scale(1.04);
+}
+.price-card.featured:hover{transform:scale(1.04) translateY(-10px);}
+.price-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(120deg,var(--gold),var(--pink));
+  color:#1a0e2b;
+  font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  padding:6px 16px;border-radius:100px;
+  box-shadow:0 6px 18px rgba(236,72,153,0.4);
+}
+.price-name{color:var(--gold);font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;}
+.price-amount{
+  font-family:var(--display);
+  font-size:2.6rem;
+  color:#fff;
+  margin-bottom:4px;
+}
+.price-amount span{font-size:1rem;color:var(--muted-2);font-family:var(--body);}
+.price-desc{color:var(--muted-2);font-size:0.85rem;margin-bottom:26px;}
+.price-feats{margin-bottom:30px;flex:1;}
+.price-feats li{
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:0.9rem;color:var(--muted);
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.price-feats li:last-child{border-bottom:none;}
+.price-feats li .ic{color:var(--gold);flex:none;}
+.price-card .btn{width:100%;}
+
+/* ---------- how it works ---------- */
+.steps-wrap{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+.steps-wrap::before{
+  content:'';
+  position:absolute;
+  top:34px;left:12%;right:12%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-deep) 20%,var(--pink) 50%,var(--purple) 80%,transparent);
+  opacity:0.5;
+  z-index:0;
+}
+.step{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:0 10px;
+}
+.step-num{
+  width:68px;height:68px;
+  margin:0 auto 26px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);
+  font-size:1.5rem;
+  background:radial-gradient(circle at 35% 30%, rgba(240,198,116,0.9), rgba(139,92,246,0.7));
+  color:#1a0e2b;
+  font-weight:600;
+  box-shadow:0 10px 30px rgba(139,92,246,0.35);
+}
+.step h4{color:#fff;font-size:1.15rem;margin-bottom:10px;}
+.step p{color:var(--muted);font-size:0.9rem;max-width:260px;margin:0 auto;}
+
+/* ---------- testimonials ---------- */
+.testi-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:26px;
+}
+.testi-card{
+  padding:32px 28px;
+}
+.stars{color:var(--gold);letter-spacing:2px;margin-bottom:16px;font-size:0.95rem;}
+.testi-card p.quote{color:var(--text);font-size:0.95rem;margin-bottom:22px;font-style:italic;}
+.testi-person{display:flex;align-items:center;gap:12px;}
+.testi-avatar{
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-weight:600;
+  color:#1a0e2b;
+}
+.testi-person strong{display:block;font-size:0.88rem;color:#fff;}
+.testi-person span{font-size:0.76rem;color:var(--muted-2);}
+
+/* ---------- contact ---------- */
+.contact-wrap{
+  display:grid;
+  grid-template-columns:0.9fr 1.1fr;
+  gap:50px;
+}
+.contact-card{padding:40px;}
+.contact-links{display:flex;flex-direction:column;gap:16px;margin-top:26px;}
+.contact-link{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;
+  border-radius:16px;
+  transition:transform .35s var(--ease),background .35s;
+}
+.contact-link:hover{transform:translateX(6px);background:rgba(255,255,255,0.05);}
+.contact-link .ic-wrap{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  flex:none;
+}
+.contact-link.wa .ic-wrap{background:linear-gradient(135deg,#25d366,#128c4d);}
+.contact-link.ig .ic-wrap{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);}
+.contact-link.em .ic-wrap{background:linear-gradient(135deg,var(--purple),var(--blue));}
+.contact-link strong{display:block;font-size:0.92rem;color:#fff;}
+.contact-link span{font-size:0.78rem;color:var(--muted-2);}
+
+.form-card{padding:40px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+.field label{
+  display:block;font-size:0.8rem;color:var(--muted);margin-bottom:8px;
+}
+.field input,.field textarea{
+  width:100%;
+  padding:14px 16px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--glass-brd);
+  color:#fff;
+  font-family:inherit;
+  font-size:0.92rem;
+  transition:border-color .3s,background .3s;
+}
+.field input:focus,.field textarea:focus{
+  outline:none;
+  border-color:var(--gold-deep);
+  background:rgba(255,255,255,0.08);
+}
+.field{margin-bottom:18px;}
+.field textarea{resize:vertical;min-height:110px;}
+.form-note{font-size:0.78rem;color:var(--muted-2);margin-top:14px;}
+
+/* ---------- footer ---------- */
+footer{
+  border-top:1px solid var(--glass-brd);
+  padding:70px 0 30px;
+  position:relative;
+  z-index:1;
+}
+.footer-top{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:40px;
+  margin-bottom:50px;
+}
+.footer-brand .logo{margin-bottom:16px;}
+.footer-brand p{color:var(--muted-2);font-size:0.9rem;max-width:280px;font-family:var(--display);font-style:italic;font-size:1.05rem;color:var(--muted);}
+.footer-col h5{
+  font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:18px;
+}
+.footer-col ul li{margin-bottom:11px;}
+.footer-col ul li a{color:var(--muted-2);font-size:0.9rem;transition:color .25s,padding-left .25s;}
+.footer-col ul li a:hover{color:#fff;padding-left:4px;}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:14px;
+  padding-top:26px;
+  border-top:1px solid rgba(255,255,255,0.07);
+  font-size:0.8rem;color:var(--muted-2);
+}
+.footer-socials{display:flex;gap:14px;}
+.footer-socials a{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--glass-brd);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s,transform .3s;
+}
+.footer-socials a:hover{background:linear-gradient(135deg,var(--purple),var(--pink));transform:translateY(-3px);}
+
+/* ---------- reveal animation ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease);
+}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-visual{order:-1;max-width:340px;margin:0 auto 20px;}
+  .services-grid{grid-template-columns:repeat(2,1fr);}
+  .demo-grid{grid-template-columns:repeat(2,1fr);}
+  .why-wrap{grid-template-columns:1fr;gap:40px;}
+  .pricing-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto;}
+  .price-card.featured{transform:none;}
+  .price-card.featured:hover{transform:translateY(-10px);}
+  .steps-wrap{grid-template-columns:1fr;gap:50px;}
+  .steps-wrap::before{display:none;}
+  .testi-grid{grid-template-columns:1fr;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:720px){
+  .nav-links{display:none;}
+  .menu-toggle{display:block;}
+  .nav-cta .btn-ghost{display:none;}
+  .section{padding:86px 0;}
+  .hero{padding-top:120px;}
+  .services-grid{grid-template-columns:1fr;}
+  .demo-grid{grid-template-columns:1fr;}
+  .why-feats{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;gap:30px;}
+  .hero-trust{gap:24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-atmosphere">
+  <div class="grain"></div>
+  <div class="orb" style="width:500px;height:500px;background:var(--purple);top:-150px;left:-150px;"></div>
+  <div class="orb" style="width:400px;height:400px;background:var(--pink);top:20%;right:-120px;"></div>
+  <div class="orb" style="width:450px;height:450px;background:var(--gold);bottom:-180px;left:30%;opacity:0.25;"></div>
+</div>
+
+<header id="siteHeader">
+  <div class="container nav-inner">
+    <a href="#top" class="logo"><span class="logo-mark">✦</span>DreamWish Studio</a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#demos">Showcase</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#process">Process</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-ghost btn-small">Get In Touch</a>
+      <a href="#pricing" class="btn btn-primary btn-small">Start a Project</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- mobile menu -->
+<div id="mobileMenu" class="glass" style="position:fixed;top:74px;right:16px;left:16px;z-index:99;padding:22px;display:none;flex-direction:column;gap:16px;">
+  <a href="#services">Services</a>
+  <a href="#demos">Showcase</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#process">Process</a>
+  <a href="#testimonials">Reviews</a>
+  <a href="#contact" class="btn btn-primary btn-small" style="margin-top:6px;">Get In Touch</a>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="particles" id="particles"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">Bespoke digital gifting studio</div>
+        <h1>Make Their Birthday <em>Unforgettable</em> With A Beautiful Digital Surprise</h1>
+        <p class="lead">Custom animated birthday websites with photos, music, memories, and emotional messages — designed for the one person you want to make feel truly celebrated.</p>
+        <div class="hero-actions">
+          <a href="#pricing" class="btn btn-primary">Create Your Birthday Website</a>
+          <a href="Birthday gal/suparDelux/index.html" class="btn btn-ghost">View Demo</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item"><strong>250+</strong><span>Surprises Delivered</span></div>
+          <div class="trust-item"><strong>4.9/5</strong><span>Average Rating</span></div>
+          <div class="trust-item"><strong>24–48h</strong><span>Typical Delivery</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="mock-browser">
+          <div class="mock-topbar">
+            <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+          </div>
+          <div class="mock-body">
+            <span class="mock-badge">happybirthday-priya.site</span>
+            <div class="candle-wrap">
+              <div class="candle"></div><div class="candle"></div><div class="candle"></div>
+            </div>
+            <h3>Happy Birthday, Priya! 🎉</h3>
+            <p>A little world made only for you, filled with our favourite memories.</p>
+            <div class="mock-photos">
+              <div class="mock-photo"></div><div class="mock-photo"></div><div class="mock-photo"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>Birthday Websites <i class="dot">✦</i></span>
+      <span>Anniversary Surprises <i class="dot">✦</i></span>
+      <span>Proposal Websites <i class="dot">✦</i></span>
+      <span>Invitation Sites <i class="dot">✦</i></span>
+      <span>Memory Galleries <i class="dot">✦</i></span>
+      <span>Birthday Websites <i class="dot">✦</i></span>
+      <span>Anniversary Surprises <i class="dot">✦</i></span>
+      <span>Proposal Websites <i class="dot">✦</i></span>
+      <span>Invitation Sites <i class="dot">✦</i></span>
+      <span>Memory Galleries <i class="dot">✦</i></span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">What I create</div>
+        <h2 class="section-title">One page. Every feeling.</h2>
+        <p class="section-sub">Every project is a small, private website built around one person — here's where your surprise can go.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card glass reveal">
+          <div class="service-icon">🎂</div>
+          <h3>Birthday Websites</h3>
+          <p>Animated countdowns, candles, photo timelines and a heartfelt message wrapped in one shareable link.</p>
+          <span class="tag">Most popular</span>
+        </div>
+        <div class="service-card glass reveal">
+          <div class="service-icon">💍</div>
+          <h3>Anniversary Websites</h3>
+          <p>Relive your story year by year — first date, first trip, first "yes" — set to music and gentle motion.</p>
+          <span class="tag">For couples</span>
+        </div>
+        <div class="service-card glass reveal">
+          <div class="service-icon">💐</div>
+          <h3>Proposal Websites</h3>
+          <p>Build the moment before the moment — a cinematic reveal page that ends with the question itself.</p>
+          <span class="tag">One shot only</span>
+        </div>
+        <div class="service-card glass reveal">
+          <div class="service-icon">✉️</div>
+          <h3>Invitation Websites</h3>
+          <p>Elegant digital invites for parties, weddings and get-togethers, with RSVP and event details built in.</p>
+          <span class="tag">Event ready</span>
+        </div>
+        <div class="service-card glass reveal">
+          <div class="service-icon">🖼️</div>
+          <h3>Memory Gallery Websites</h3>
+          <p>A scrollable, animated archive of photos and moments — a keepsake that outlives a photo album.</p>
+          <span class="tag">Keepsake</span>
+        </div>
+        <div class="service-card glass reveal" style="display:flex;flex-direction:column;justify-content:center;">
+          <h3 style="margin-bottom:14px;">Not sure which fits?</h3>
+          <p style="margin-bottom:20px;">Tell me the occasion and the person — I'll recommend the right format for free.</p>
+          <a href="#contact" class="btn btn-ghost btn-small" style="align-self:flex-start;">Ask Me First</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO SHOWCASE -->
+  <section class="section" id="demos">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Showcase</div>
+        <h2 class="section-title">A few surprises, opened before</h2>
+        <p class="section-sub">Real formats from past projects — names changed, feelings kept exactly the same.</p>
+      </div>
+      <div class="demo-grid">
+        <div class="demo-card glass reveal">
+          <div class="demo-preview p1">
+            <span class="glow-icon">🎂</span>
+            <div class="demo-overlay">
+              <div class="cat">Birthday</div>
+              <h4>For a Best Friend</h4>
+            </div>
+          </div>
+          <div class="demo-body">
+            <p>A playful, confetti-filled page with inside jokes, a photo timeline and a voice-note message.</p>
+            <a href="#contact" class="preview-btn">Preview This Style →</a>
+          </div>
+        </div>
+        <div class="demo-card glass reveal">
+          <div class="demo-preview p2">
+            <span class="glow-icon">💌</span>
+            <div class="demo-overlay">
+              <div class="cat">Romantic Surprise</div>
+              <h4>Love Letter Reveal</h4>
+            </div>
+          </div>
+          <div class="demo-body">
+            <p>Soft, cinematic reveal built around a love letter, background music and a final proposal-style page.</p>
+            <a href="#contact" class="preview-btn">Preview This Style →</a>
+          </div>
+        </div>
+        <div class="demo-card glass reveal">
+          <div class="demo-preview p3">
+            <span class="glow-icon">📸</span>
+            <div class="demo-overlay">
+              <div class="cat">Memory Gallery</div>
+              <h4>Our Year, Together</h4>
+            </div>
+          </div>
+          <div class="demo-body">
+            <p>A scroll-through memory lane — twelve months, twelve photos, one gentle animated gallery.</p>
+            <a href="#contact" class="preview-btn">Preview This Style →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="section" id="why">
+    <div class="container why-wrap">
+      <div class="reveal">
+        <div class="eyebrow">Why DreamWish</div>
+        <h2 class="section-title">Every detail, considered</h2>
+        <p class="section-sub">This isn't a template generator. Every site is designed by hand, for one person, one occasion — treated like a small piece of design work rather than a form to fill in.</p>
+      </div>
+      <div class="why-feats reveal">
+        <div class="why-feat glass"><span class="why-check">✓</span><div><h4>Fully Custom Design</h4><p>Nothing copy-pasted — colours, layout and copy built for your story.</p></div></div>
+        <div class="why-feat glass"><span class="why-check">✓</span><div><h4>Mobile Friendly</h4><p>Looks and feels right whether it's opened on a phone or a laptop.</p></div></div>
+        <div class="why-feat glass"><span class="why-check">✓</span><div><h4>Beautiful Animations</h4><p>Subtle motion that feels emotional, never gimmicky.</p></div></div>
+        <div class="why-feat glass"><span class="why-check">✓</span><div><h4>Background Music</h4><p>Add a song that plays the moment the page opens.</p></div></div>
+        <div class="why-feat glass"><span class="why-check">✓</span><div><h4>Fast Delivery</h4><p>Most sites are ready within 24–48 hours of your details.</p></div></div>
+        <div class="why-feat glass"><span class="why-check">✓</span><div><h4>Affordable Pricing</h4><p>Premium feel, priced like a thoughtful gift — not a marketing budget.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Pricing</div>
+        <h2 class="section-title">Pick a package to start</h2>
+        <p class="section-sub">Every tier includes your own private link and a revision round before delivery.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card glass reveal">
+          <div class="price-name">Basic</div>
+          <div class="price-amount">₹99</div>
+          <p class="price-desc">A sweet, simple surprise — perfect for a quick birthday message.</p>
+          <ul class="price-feats">
+            <li><span class="ic">✓</span>Simple, elegant design</li>
+            <li><span class="ic">✓</span>Name customization</li>
+            <li><span class="ic">✓</span>Personal birthday message</li>
+            <li><span class="ic">✓</span>Shareable private link</li>
+          </ul>
+          <a href="Birthday gal/birth01/index.html" class="btn btn-ghost">Choose Basic</a>
+        </div>
+        <div class="price-card glass featured reveal">
+          <div class="price-badge">Most Loved</div>
+          <div class="price-name">Premium</div>
+          <div class="price-amount">₹199</div>
+          <p class="price-desc">The full experience — animated, musical, and personal.</p>
+          <ul class="price-feats">
+            <li><span class="ic">✓</span>Everything in Basic</li>
+            <li><span class="ic">✓</span>Advanced animations</li>
+            <li><span class="ic">✓</span>Photo gallery</li>
+            <li><span class="ic">✓</span>Background music</li>
+            <li><span class="ic">✓</span>Custom visual effects</li>
+          </ul>
+          <a href="Birthday gal/proBirthday/index.html" class="btn btn-primary">Choose Premium</a>
+        </div>
+        <div class="price-card glass reveal">
+          <div class="price-name">Luxury</div>
+          <div class="price-amount">₹499</div>
+          <p class="price-desc">A fully bespoke digital gift, designed end to end around your story.</p>
+          <ul class="price-feats">
+            <li><span class="ic">✓</span>Everything in Premium</li>
+            <li><span class="ic">✓</span>Fully personalized website</li>
+            <li><span class="ic">✓</span>Premium cinematic animations</li>
+            <li><span class="ic">✓</span>One-of-a-kind special design</li>
+          </ul>
+          <a href="Birthday gal/delux/index.html" class="btn btn-ghost">Choose Luxury</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="process">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">How it works</div>
+        <h2 class="section-title">From idea to surprise in 3 steps</h2>
+      </div>
+      <div class="steps-wrap">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <h4>Share Details &amp; Photos</h4>
+          <p>Tell me about the person, the occasion, and send a few of your favourite photos.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <h4>I Design Your Website</h4>
+          <p>I hand-build the animations, layout and message around what you've shared.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <h4>Receive Your Surprise Link</h4>
+          <p>Get a private link ready to send — open it together, or watch them open it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Kind words</div>
+        <h2 class="section-title">Loved by the people who gave them</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card glass reveal">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"She cried happy tears. The candles animation and our old photos together made it feel like a real gift, not just a message."</p>
+          <div class="testi-person">
+            <div class="testi-avatar" style="background:linear-gradient(135deg,var(--purple),var(--pink));">A</div>
+            <div><strong>Ananya R.</strong><span>Premium Package</span></div>
+          </div>
+        </div>
+        <div class="testi-card glass reveal">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Used it for a proposal reveal. The pacing of the page built up the moment perfectly — she said yes before the page even finished loading."</p>
+          <div class="testi-person">
+            <div class="testi-avatar" style="background:linear-gradient(135deg,var(--gold),var(--pink));">R</div>
+            <div><strong>Rohan K.</strong><span>Luxury Package</span></div>
+          </div>
+        </div>
+        <div class="testi-card glass reveal">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Simple, quick, and still felt premium. Got it delivered in a day for my mom's birthday and she still talks about it."</p>
+          <div class="testi-person">
+            <div class="testi-avatar" style="background:linear-gradient(135deg,var(--blue),var(--purple));">S</div>
+            <div><strong>Sneha M.</strong><span>Basic Package</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container contact-wrap">
+      <div class="reveal">
+        <div class="eyebrow">Let's build it</div>
+        <h2 class="section-title">Start your surprise today</h2>
+        <p class="section-sub">Reach out with the occasion, the person, and any photos you'd like included — I'll reply with next steps within a few hours.</p>
+        <div class="contact-card glass contact-links" style="margin-top:0;">
+          <a href="https://wa.me/916200871722" target="_blank" rel="noopener" class="contact-link wa">
+            <span class="ic-wrap">💬</span>
+            <div><strong>Chat on WhatsApp</strong><span>Fastest way to start a project</span></div>
+          </a>
+          <a href="https://instagram.com/dreamwish.studio" target="_blank" rel="noopener" class="contact-link ig">
+            <span class="ic-wrap">📷</span>
+            <div><strong>Follow on Instagram</strong><span>See new surprises as they launch</span></div>
+          </a>
+          <a href="somnathsr890@gmail.com" class="contact-link em">
+            <span class="ic-wrap">✉️</span>
+            <div><strong>somnathsr890@gmail.com</strong><span>For detailed briefs and files</span></div>
+          </a>
+        </div>
+      </div>
+
+      <form class="form-card glass reveal" id="contactForm">
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" placeholder="e.g. Aditi Sharma" required>
+          </div>
+          <div class="field">
+            <label for="email">Your email</label>
+            <input type="email" id="email" placeholder="somnathsr890@gmail.com" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="occasion">Occasion &amp; recipient</label>
+          <input type="text" id="occasion" placeholder="e.g. Birthday surprise for my sister">
+        </div>
+        <div class="field">
+          <label for="message">Tell me the story</label>
+          <textarea id="message" placeholder="Share a few details, memories or the vibe you're going for..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send My Details</button>
+        <p class="form-note" id="formNote">I typically reply within a few hours. No spam, ever.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo"><span class="logo-mark">✦</span>DreamWish Studio</a>
+        <p>Creating digital memories that last forever.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#demos">Showcase</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#process">Process</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="Birthday gal/index.html">Birthday Websites</a></li>
+          <li><a href="Anniversary gal/index.html">Anniversary Websites</a></li>
+          <li><a href="proposal gal/index.html">Proposal Websites</a></li>
+          <li><a href="memory gal/index.html">Memory Galleries</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="somnathsr890@gmail.com">ABC@gamil.com</a></li>
+          <li><a href="https://wa.me/916200871722">WhatsApp</a></li>
+          <li><a href="https://instagram.com/dreamwish.studio">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 DreamWish Studio. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="https://instagram.com/dreamwish.studio" aria-label="Instagram">📷</a>
+        <a href="https://wa.me/916200871722" aria-label="WhatsApp">💬</a>
+        <a href="somnathsr890@gmail.com" aria-label="Email">✉️</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// header scroll state
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 30);
+}, {passive:true});
+
+// mobile menu toggle
+const menuToggle = document.getElementById('menuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+menuToggle.addEventListener('click', () => {
+  const open = mobileMenu.style.display === 'flex';
+  mobileMenu.style.display = open ? 'none' : 'flex';
+  menuToggle.textContent = open ? '☰' : '✕';
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileMenu.style.display = 'none';
+  menuToggle.textContent = '☰';
+}));
+
+// floating particles in hero
+const particleWrap = document.getElementById('particles');
+const colors = ['#f0c674','#ec4899','#8b5cf6','#4f8cff'];
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduceMotion){
+  for(let i=0;i<28;i++){
+    const p = document.createElement('div');
+    p.className='particle';
+    const size = Math.random()*5+2;
+    p.style.width = size+'px';
+    p.style.height = size+'px';
+    p.style.left = Math.random()*100+'%';
+    p.style.bottom = '-20px';
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.style.boxShadow = '0 0 10px '+colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDuration = (Math.random()*10+8)+'s';
+    p.style.animationDelay = (Math.random()*10)+'s';
+    particleWrap.appendChild(p);
+  }
+}
+
+// scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.15});
+revealEls.forEach(el => io.observe(el));
+
+// service card cursor glow
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX-rect.left)+'px');
+    card.style.setProperty('--my', (e.clientY-rect.top)+'px');
+  });
+});
+
+// contact form (front-end only demo)
+const form = document.getElementById('contactForm');
+const formNote = document.getElementById('formNote');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+//from here i added codes
+  const data = {
+    name: form.name.value,
+    email: form.email.value,
+    message: form.message.value,
+    
+    
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbzPgjjPTB2ulhWTDRBYxkhGpNCXJB3rQE5OTO5W669dSkvnn4IGXtr1y-MJMdH_4jqBww/exec', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    formNote.textContent = "Thanks! Your details are ready.";
+    formNote.style.color = 'var(--gold)';
+    form.reset();
+  })
+  .catch(() => {
+    formNote.textContent = "Something went wrong, please try again.";
+  });
+});
+;
+</script>
+</body>
+</html>

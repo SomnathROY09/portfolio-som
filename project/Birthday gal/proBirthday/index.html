@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Happy Birthday Rimjhim Jha 🎂❤️</title>
+
+<!-- ============================================================
+     PREMIUM BIRTHDAY WEBSITE FOR RIMJHIM JHA — "ROYAL INVITATION" EDITION
+     ------------------------------------------------------------
+     This is an ALTERNATE design from the glass-card version —
+     built around the idea of a royal wax-seal invitation that
+     "opens" into the celebration. Same requirements, different look.
+
+     HOW TO EDIT THIS FILE
+     1. Search "EDIT ME" comments — every bit of text, every photo,
+        and the music file are flagged there.
+     2. Photos: find "GALLERY PHOTOS DATA" in the <script> and swap
+        the image links for your own (or local files like "img/1.jpg").
+     3. Music: find "MUSIC SETUP" near the <audio> tag and replace
+        the mp3 filename with your own file, kept in the same folder.
+     4. The site starts behind a wax-seal invitation screen — visitors
+        tap the seal to "open" it, which also lets the music autoplay
+        (browsers require a click before audio can start).
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Cinzel: engraved royal display face | EB Garamond: elegant italic body/quote face
+     Jost: clean geometric sans for UI text | Alex Brush: handwritten signature accent -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;1,500;1,600&family=Jost:wght@300;400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS — "Royal Invitation" palette
+   Black/near-black base, antique gold as the hero metal,
+   deep purple as atmosphere, rose-pink used only as a glow accent.
+   ============================================================ */
+:root{
+  --void:      #05030a;
+  --ink:       #0d0716;
+  --purple:    #241041;
+  --purple-2:  #4a1a75;
+  --gold:      #d4af37;
+  --gold-hi:   #f7dd8f;
+  --rose:      #e0559e;
+  --parchment: #f3e9d2;
+  --ivory:     #f6f1e6;
+
+  --font-display: 'Cinzel', serif;
+  --font-quote:   'EB Garamond', serif;
+  --font-body:    'Jost', sans-serif;
+  --font-script:  'Alex Brush', cursive;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  background: var(--void);
+  color: var(--ivory);
+  font-family: var(--font-body);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+}
+
+.bg-wash{
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(212,175,55,0.14), transparent 60%),
+    radial-gradient(ellipse 90% 60% at 15% 40%, rgba(74,26,117,0.4), transparent 65%),
+    radial-gradient(ellipse 80% 60% at 90% 75%, rgba(224,85,158,0.14), transparent 60%),
+    linear-gradient(180deg, var(--void), var(--ink) 45%, var(--void));
+}
+::selection{ background: var(--gold); color:#1a0b2e; }
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:linear-gradient(var(--gold),var(--rose)); border-radius:10px; }
+
+/* ============================================================
+   ORNATE FRAME — reused "royal card" look (replaces glassmorphism-only cards)
+   ============================================================ */
+.royal-frame{
+  position:relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border: 1px solid rgba(212,175,55,0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 6px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45), inset 0 0 40px rgba(212,175,55,0.05);
+}
+.royal-frame::before,
+.royal-frame::after{
+  content:"";
+  position:absolute; width:22px; height:22px;
+  border: 2px solid var(--gold);
+  opacity:0.75;
+}
+.royal-frame::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+.royal-frame::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+.glow-gold{ box-shadow: 0 0 40px rgba(212,175,55,0.28), 0 20px 50px rgba(0,0,0,0.45); }
+.glow-rose{ box-shadow: 0 0 40px rgba(224,85,158,0.25), 0 20px 50px rgba(0,0,0,0.45); }
+
+canvas.fx-layer{ position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+#confettiCanvas{ z-index:80; }
+#fireworksCanvas{ z-index:2; }
+#sparkCanvas{ z-index:2; }
+
+/* ============================================================
+   INTRO — WAX SEAL INVITATION OVERLAY (signature opening moment)
+   ============================================================ */
+#introOverlay{
+  position:fixed; inset:0; z-index:200;
+  background: radial-gradient(ellipse at 50% 40%, #1a0e2e, var(--void) 70%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:22px;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+#introOverlay.opened{ opacity:0; visibility:hidden; pointer-events:none; }
+.invite-title{
+  font-family: var(--font-display);
+  letter-spacing:3px;
+  font-size: clamp(13px, 2vw, 16px);
+  color: var(--gold-hi);
+  text-transform:uppercase;
+  opacity:0.9;
+}
+.wax-seal{
+  width: 130px; height:130px; border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #e6c15a, var(--gold) 45%, #8a6a1c 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display); font-size:15px; font-weight:700; color:#3a2a0a;
+  box-shadow: 0 0 50px rgba(212,175,55,0.55), inset 0 -6px 12px rgba(0,0,0,0.35), inset 0 6px 10px rgba(255,255,255,0.35);
+  cursor:pointer;
+  animation: sealPulse 2.6s ease-in-out infinite;
+  border: 3px solid rgba(255,255,255,0.15);
+}
+.wax-seal span{ letter-spacing:1px; }
+@keyframes sealPulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.05);} }
+.wax-seal.cracking{ animation: crack 0.7s ease forwards; }
+@keyframes crack{
+  0%{ transform:scale(1) rotate(0deg); }
+  40%{ transform:scale(1.2) rotate(-6deg); }
+  100%{ transform:scale(2.4) rotate(8deg); opacity:0; }
+}
+.invite-sub{
+  font-family: var(--font-quote); font-style:italic;
+  font-size: clamp(15px, 2.4vw, 19px);
+  color: var(--ivory); opacity:0.75; max-width:320px;
+}
+
+/* ============================================================
+   SECTION SHELL
+   ============================================================ */
+section{ position:relative; z-index:2; padding: 100px 20px; max-width:1100px; margin:0 auto; }
+.eyebrow{
+  font-family: var(--font-body); letter-spacing:5px; text-transform:uppercase;
+  font-size:11px; color: var(--rose); text-align:center; margin-bottom:12px; opacity:0.85;
+}
+.title-ornament{ text-align:center; margin-bottom:8px; font-size:20px; color:var(--gold); opacity:0.8; }
+.section-title{
+  font-family: var(--font-display); text-align:center; font-weight:700;
+  font-size: clamp(26px, 4.6vw, 44px);
+  color: var(--gold-hi);
+  text-shadow: 0 0 24px rgba(212,175,55,0.35);
+  margin-bottom:54px; letter-spacing:1px;
+}
+
+.reveal{ opacity:0; transform: translateY(46px) scale(0.96); transition: opacity 1s ease, transform 1s ease; }
+.reveal.in-view{ opacity:1; transform: translateY(0) scale(1); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px 20px; }
+.hero-crest{ font-size: clamp(28px,5vw,40px); margin-bottom:16px; animation: crestFloat 4.5s ease-in-out infinite; }
+@keyframes crestFloat{ 0%,100%{ transform:translateY(0) rotate(0deg);} 50%{ transform:translateY(-8px) rotate(3deg);} }
+.hero h1{
+  font-family: var(--font-display); font-weight:800;
+  font-size: clamp(30px, 6.6vw, 62px); line-height:1.22; letter-spacing:1px;
+  background: linear-gradient(100deg, var(--gold-hi), #fff 30%, var(--rose) 55%, var(--gold) 85%);
+  background-size:250% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation: shimmer 8s linear infinite; max-width:880px;
+}
+@keyframes shimmer{ to{ background-position:200% center; } }
+.hero-date{
+  margin-top:24px; font-family: var(--font-quote); font-style:italic;
+  font-size: clamp(17px,2.8vw,23px); color: var(--gold-hi);
+  padding: 12px 30px; border-radius:2px;
+}
+.hero-typing-wrap{ margin-top:32px; max-width:620px; min-height:3.4em; }
+.hero-typing{ font-family: var(--font-quote); font-size: clamp(16px,2.4vw,21px); opacity:0.92; }
+.cursor-blink{ display:inline-block; width:2px; background: var(--gold); margin-left:2px; animation: blink 0.8s step-end infinite; }
+@keyframes blink{ 50%{ opacity:0; } }
+.hero-scroll-cue{ margin-top:48px; font-size:11px; letter-spacing:4px; text-transform:uppercase; opacity:0.55; animation: crestFloat 2.6s ease-in-out infinite; }
+.hero-scroll-cue span{ display:block; font-size:18px; margin-top:6px; }
+
+/* ============================================================
+   LETTER-STYLE MESSAGE (welcome / friendship sections)
+   ============================================================ */
+.letter-card{ padding: clamp(30px,6vw,64px); text-align:center; position:relative; }
+.letter-seal{
+  width:56px; height:56px; border-radius:50%; margin:0 auto 20px;
+  background: radial-gradient(circle at 35% 30%, #e6c15a, var(--gold) 50%, #8a6a1c 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; box-shadow: 0 0 24px rgba(212,175,55,0.5);
+}
+.message-text{ font-family: var(--font-quote); font-size: clamp(18px,2.9vw,25px); line-height:1.75; font-style:italic; color: var(--ivory); }
+.message-signoff{ margin-top:26px; font-family: var(--font-script); font-size: clamp(30px,5vw,44px); color: var(--gold-hi); }
+
+/* ============================================================
+   CAKE — golden pedestal carousel with sparkle particles
+   ============================================================ */
+.cake-section{ text-align:center; }
+.cake-stage{ width:100%; max-width:320px; height:320px; margin:0 auto 12px; perspective:1300px; position:relative; }
+.pedestal{
+  position:absolute; left:50%; bottom:18px; width:180px; height:16px; margin-left:-90px;
+  background: linear-gradient(180deg, var(--gold-hi), var(--gold) 60%, #7a5c17);
+  border-radius:50%;
+  box-shadow: 0 10px 30px rgba(212,175,55,0.4);
+}
+.cake-3d{ position:absolute; left:50%; top:46%; transform:translate(-50%,-50%); transform-style:preserve-3d; animation: rotateCake 16s linear infinite; }
+@keyframes rotateCake{ from{ transform:translate(-50%,-50%) rotateY(0deg) rotateX(6deg);} to{ transform:translate(-50%,-50%) rotateY(360deg) rotateX(6deg);} }
+.cake-tier{ position:absolute; left:50%; top:50%; border-radius:10px; }
+.tier-bottom{ width:210px; height:85px; margin:-42px 0 0 -105px; background: linear-gradient(180deg, var(--purple-2), #2c1049 60%, #1a0930); box-shadow: 0 0 40px rgba(74,26,117,0.5), inset 0 -10px 18px rgba(0,0,0,0.3); border: 1px solid rgba(212,175,55,0.4); }
+.tier-mid{ width:145px; height:70px; margin:-95px 0 0 -72.5px; background: linear-gradient(180deg, var(--gold-hi), var(--gold) 60%, #8a6a1c); box-shadow: 0 0 40px rgba(212,175,55,0.4), inset 0 -10px 18px rgba(0,0,0,0.25); }
+.tier-top{ width:92px; height:56px; margin:-138px 0 0 -46px; background: linear-gradient(180deg, #fff, var(--rose) 65%, #a83a72); box-shadow: 0 0 34px rgba(224,85,158,0.4), inset 0 -8px 14px rgba(0,0,0,0.2); }
+.candle{ position:absolute; top:-150px; left:50%; width:7px; height:32px; margin-left:-3.5px; background: linear-gradient(180deg,#fff,var(--gold-hi)); border-radius:3px; }
+.candle.c2{ margin-left:-30px; }
+.candle.c3{ margin-left:22px; }
+.flame{ position:absolute; top:-15px; left:50%; width:9px; height:15px; margin-left:-4.5px; background: radial-gradient(circle at 50% 30%, #fff8, var(--gold) 40%, var(--rose) 90%); border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%; filter: drop-shadow(0 0 10px var(--gold)); animation: flicker 0.6s ease-in-out infinite alternate; }
+@keyframes flicker{ 0%{ transform:scale(1) rotate(-3deg);} 100%{ transform:scale(1.15,1.3) rotate(3deg);} }
+.cake-caption{ font-family: var(--font-quote); font-style:italic; font-size: clamp(15px,2.5vw,19px); opacity:0.85; max-width:460px; margin:0 auto; }
+.blow-btn{
+  margin-top:22px; font-family: var(--font-body); font-weight:600; font-size:13px; letter-spacing:1.5px; text-transform:uppercase;
+  color: var(--void); background: linear-gradient(100deg, var(--gold-hi), var(--gold));
+  border:none; border-radius:2px; padding: 15px 32px; cursor:pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.blow-btn:hover{ transform: translateY(-3px); box-shadow: 0 12px 30px rgba(212,175,55,0.4); }
+
+/* ============================================================
+   GALLERY — scrapbook / polaroid style (different from grid+overlay)
+   ============================================================ */
+.gallery-scrap{ display:grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap:46px 30px; padding-top:10px; }
+.polaroid{
+  background: var(--parchment); padding: 14px 14px 46px; border-radius:2px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+  cursor:pointer; position:relative;
+  transition: transform 0.5s cubic-bezier(.2,.8,.2,1), box-shadow 0.5s ease;
+}
+.polaroid:nth-child(odd){ transform: rotate(-4deg); }
+.polaroid:nth-child(even){ transform: rotate(3deg); }
+.polaroid:hover{ transform: rotate(0deg) translateY(-8px) scale(1.03); box-shadow: 0 26px 55px rgba(212,175,55,0.35); z-index:5; }
+.polaroid img{ width:100%; aspect-ratio: 4/4.6; object-fit:cover; display:block; filter: sepia(0.08) saturate(1.05); }
+.polaroid .tape{
+  position:absolute; top:-10px; left:50%; transform: translateX(-50%) rotate(-3deg);
+  width:70px; height:22px; background: rgba(212,175,55,0.35); opacity:0.8;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.polaroid-caption{ text-align:center; margin-top:12px; }
+.polaroid-caption .cap-title{ font-family: var(--font-script); font-size:24px; color:#3a2a0a; }
+.polaroid-caption .cap-sub{ font-family: var(--font-body); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:#7a6a4a; margin-top:2px; }
+
+/* ============================================================
+   WISHES — circular medallion cards (different from square grid cards)
+   ============================================================ */
+.wishes-row{ display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:36px 20px; }
+.medallion{ text-align:center; }
+.medallion-badge{
+  width:96px; height:96px; border-radius:50%; margin:0 auto 18px;
+  display:flex; align-items:center; justify-content:center; font-size:32px;
+  background: radial-gradient(circle at 35% 30%, rgba(212,175,55,0.25), rgba(74,26,117,0.4));
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 30px rgba(212,175,55,0.3), inset 0 0 20px rgba(212,175,55,0.08);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.medallion:hover .medallion-badge{ transform: scale(1.08) rotate(-4deg); box-shadow: 0 0 44px rgba(224,85,158,0.4); }
+.medallion-title{ font-family: var(--font-display); font-weight:600; font-size:16.5px; color: var(--gold-hi); letter-spacing:1px; margin-bottom:10px; }
+.medallion-text{ font-family: var(--font-quote); font-style:italic; font-size:15px; line-height:1.7; opacity:0.85; max-width:230px; margin:0 auto; }
+
+/* ============================================================
+   FINALE — golden curtain reveal
+   ============================================================ */
+.finale{ text-align:center; position:relative; min-height:72vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; }
+.curtain{ position:absolute; top:0; bottom:0; width:52%; background: linear-gradient(90deg, var(--purple-2), var(--purple)); z-index:0; transition: transform 1.4s cubic-bezier(.7,0,.3,1); box-shadow: 0 0 60px rgba(74,26,117,0.6); }
+.curtain.left{ left:0; transform-origin:left; }
+.curtain.right{ right:0; transform-origin:right; }
+.finale.opened .curtain.left{ transform: scaleX(0); }
+.finale.opened .curtain.right{ transform: scaleX(0); }
+.finale-content{ position:relative; z-index:1; }
+.finale h2{ font-family: var(--font-script); font-size: clamp(36px,7.5vw,64px); color: var(--gold-hi); text-shadow: 0 0 30px rgba(212,175,55,0.4); margin-bottom:18px; }
+.finale p{ font-family: var(--font-quote); font-style:italic; font-size: clamp(17px,2.9vw,23px); max-width:600px; opacity:0.9; line-height:1.75; margin:0 auto; }
+.finale-name{ margin-top:28px; font-family: var(--font-display); font-weight:700; font-size: clamp(20px,3.6vw,32px); letter-spacing:1.5px; color:#fff; text-shadow: 0 0 20px var(--rose), 0 0 40px var(--gold); }
+.finale-btn{
+  margin-top:34px; font-family: var(--font-body); font-weight:600; font-size:13px; letter-spacing:1.5px; text-transform:uppercase;
+  color:#fff; background: linear-gradient(100deg, var(--purple-2), var(--rose));
+  border:1px solid rgba(212,175,55,0.5); border-radius:2px; padding:16px 34px; cursor:pointer;
+  box-shadow: 0 0 30px rgba(224,85,158,0.3); transition: transform 0.25s ease;
+}
+.finale-btn:hover{ transform: translateY(-3px); }
+
+footer{ position:relative; z-index:2; text-align:center; padding:40px 20px 100px; font-size:11px; opacity:0.5; letter-spacing:1.5px; font-family: var(--font-body); }
+
+/* ============================================================
+   MUSIC PLAYER — spinning vinyl record (different from pill widget)
+   ============================================================ */
+.vinyl-widget{ position:fixed; bottom:22px; right:22px; z-index:90; display:flex; align-items:center; gap:10px; }
+.vinyl-disc{
+  width:56px; height:56px; border-radius:50%; cursor:pointer;
+  background: repeating-radial-gradient(circle at center, #111 0 2px, #1c1c1c 3px 5px);
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 24px rgba(212,175,55,0.45);
+  display:flex; align-items:center; justify-content:center;
+  animation: spinDisc 3.5s linear infinite; animation-play-state: paused;
+  position:relative;
+}
+.vinyl-disc.playing{ animation-play-state: running; }
+.vinyl-disc::after{ content:""; width:16px; height:16px; border-radius:50%; background: var(--gold); box-shadow: inset 0 0 4px #000; }
+@keyframes spinDisc{ to{ transform: rotate(360deg); } }
+.vinyl-label{
+  font-family: var(--font-body); font-size:11px; letter-spacing:1px; color: var(--gold-hi);
+  background: rgba(13,7,22,0.7); border:1px solid rgba(212,175,55,0.3);
+  padding:8px 14px; border-radius:2px; max-width:120px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:480px){
+  section{ padding:70px 16px; }
+  .vinyl-label{ display:none; }
+  .cake-stage{ height:260px; max-width:260px; }
+  .polaroid{ padding: 10px 10px 36px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-wash"></div>
+<canvas class="fx-layer" id="sparkCanvas"></canvas>
+<canvas class="fx-layer" id="fireworksCanvas"></canvas>
+<canvas class="fx-layer" id="confettiCanvas"></canvas>
+
+<!-- ============================================================
+     INTRO — WAX SEAL INVITATION (tap to open the celebration)
+     ============================================================ -->
+<div id="introOverlay">
+  <div class="invite-title">You are cordially invited to celebrate</div>
+  <div class="wax-seal" id="waxSeal"><span>R J</span></div>
+  <!-- EDIT ME: intro subtext -->
+  <p class="invite-sub">Tap the seal to open Rimjhim's birthday celebration ✨</p>
+</div>
+
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero">
+  <div class="hero-crest">👑✨</div>
+  <!-- EDIT ME: main headline -->
+  <h1>Happy Birthday<br>Rimjhim Jha 🎂❤️</h1>
+
+  <!-- EDIT ME: replace the text inside the span with her actual birthday date -->
+  <div class="hero-date royal-frame">🎈 Celebrating on <span id="birthdayDate">19July Such a special Day</span> 🎈</div>
+
+  <div class="hero-typing-wrap">
+    <p class="hero-typing" id="typingText"></p>
+  </div>
+  <div class="hero-scroll-cue">scroll down<span>↓</span></div>
+</section>
+
+<!-- ============================================================
+     SECTION 1 — WELCOME BIRTHDAY SECTION
+     ============================================================ -->
+<section id="welcome">
+  <div class="eyebrow">A little surprise</div>
+  <div class="title-ornament">✦ ✦ ✦</div>
+  <h2 class="section-title">Welcome to Your Royal Celebration</h2>
+  <div class="royal-frame letter-card reveal">
+    <div class="letter-seal">🕊️</div>
+    <!-- EDIT ME: welcome note -->
+    <p class="message-text">
+      Today isn't just another day on the calendar — it's the day the world got a little brighter,
+      a little kinder, and a lot more fun, because it's the day <strong>Rimjhim Jha</strong> was born.
+      This whole little page was made just for you, to celebrate you the way you deserve. 💜
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2 — FRIENDSHIP MESSAGE SECTION
+     ============================================================ -->
+<section id="friendship">
+  <div class="eyebrow">From my heart to yours</div>
+  <div class="title-ornament">✦ ✦ ✦</div>
+  <h2 class="section-title">A Friendship Like Ours</h2>
+  <div class="royal-frame letter-card glow-rose reveal">
+    <div class="letter-seal">💌</div>
+    <!-- EDIT ME: this is the main heartfelt message -->
+    <p class="message-text">
+      Dear Rimjhim, you are not just a friend, you are a wonderful part of my life.
+      May your birthday bring endless happiness, success, love, and unforgettable memories.
+      Keep smiling, keep shining, and always follow your dreams. Happy Birthday ❤️
+    </p>
+    <div class="message-signoff">— always your friend</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     3D ROTATING CAKE
+     ============================================================ -->
+<section class="cake-section">
+  <div class="eyebrow">Make a wish</div>
+  <div class="title-ornament">✦ ✦ ✦</div>
+  <h2 class="section-title">One Wish, Just for You</h2>
+  <div class="reveal">
+    <div class="cake-stage">
+      <div class="pedestal"></div>
+      <div class="cake-3d" id="cake3d">
+        <div class="cake-tier tier-bottom"></div>
+        <div class="cake-tier tier-mid"></div>
+        <div class="cake-tier tier-top">
+          <div class="candle c1"><div class="flame"></div></div>
+          <div class="candle c2"><div class="flame"></div></div>
+          <div class="candle c3"><div class="flame"></div></div>
+        </div>
+      </div>
+    </div>
+    <p class="cake-caption">Close your eyes, make a wish, and blow out the candles 🕯️</p>
+    <button class="blow-btn" id="blowBtn">Blow the Candles</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3 — PHOTO MEMORIES GALLERY (polaroid / scrapbook style)
+     ============================================================ -->
+<section id="gallery">
+  <div class="eyebrow">Moments worth keeping</div>
+  <div class="title-ornament">✦ ✦ ✦</div>
+  <h2 class="section-title">Photo Memories</h2>
+  <!-- EDIT ME: photo cards are generated from GALLERY PHOTOS DATA in the script below -->
+  <div class="gallery-scrap" id="galleryGrid"></div>
+</section>
+
+<!-- ============================================================
+     SECTION 4 — SPECIAL WISHES SECTION (medallion style)
+     ============================================================ -->
+<section id="wishes">
+  <div class="eyebrow">Little blessings</div>
+  <div class="title-ornament">✦ ✦ ✦</div>
+  <h2 class="section-title">Special Wishes for You</h2>
+  <div class="wishes-row">
+    <!-- EDIT ME: each medallion below can be freely edited -->
+    <div class="medallion reveal">
+      <div class="medallion-badge">🌟</div>
+      <div class="medallion-title">Endless Success</div>
+      <p class="medallion-text">May every goal you chase turn into a story you're proud to tell.</p>
+    </div>
+    <div class="medallion reveal">
+      <div class="medallion-badge">💖</div>
+      <div class="medallion-title">Boundless Love</div>
+      <p class="medallion-text">May you always be surrounded by people who cherish you as much as I do.</p>
+    </div>
+    <div class="medallion reveal">
+      <div class="medallion-badge">🌈</div>
+      <div class="medallion-title">Joy in Every Season</div>
+      <p class="medallion-text">May laughter find its way into your ordinary days and your biggest moments.</p>
+    </div>
+    <div class="medallion reveal">
+      <div class="medallion-badge">🦋</div>
+      <div class="medallion-title">New Beginnings</div>
+      <p class="medallion-text">May this year of your life open doors you didn't even know existed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5 — FINAL SURPRISE WITH FIREWORKS (curtain reveal)
+     ============================================================ -->
+<section class="finale" id="finale">
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+  <div class="finale-content">
+    <h2>One Last Thing, Rimjhim...</h2>
+    <!-- EDIT ME: final surprise message -->
+    <p>
+      However far life takes us, however busy the days get — know that there is always
+      a friend cheering for you, celebrating you, and grateful for you. Today is your day.
+      Shine bright, birthday star.
+    </p>
+    <div class="finale-name">With all my love, Happy Birthday 🎂✨</div>
+    <button class="finale-btn" id="fireworksBtn">Light Up the Sky</button>
+  </div>
+</section>
+
+<footer>Made with 💜 for Rimjhim Jha — a page crafted especially for you.</footer>
+
+<!-- ============================================================
+     MUSIC SETUP
+     ------------------------------------------------------------
+     EDIT ME: replace "birthday-melody.mp3" with your own MP3 file
+     path, placed in the same folder as this HTML file. Because the
+     intro requires a tap to "open the seal," that same tap is used
+     to start the music, so it can begin automatically right away.
+     ============================================================ -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="birthday-melody.mp3" type="audio/mpeg">
+</audio>
+
+<div class="vinyl-widget">
+  <div class="vinyl-label" id="vinylLabel">Tap disc to play</div>
+  <div class="vinyl-disc" id="vinylDisc"></div>
+</div>
+
+<script>
+/* ============================================================
+   INTRO — wax seal opens the site + starts music + fires confetti
+   ============================================================ */
+const introOverlay = document.getElementById('introOverlay');
+const waxSeal = document.getElementById('waxSeal');
+const bgMusic = document.getElementById('bgMusic');
+const vinylDisc = document.getElementById('vinylDisc');
+const vinylLabel = document.getElementById('vinylLabel');
+let isPlaying = false;
+
+function openInvitation(){
+  waxSeal.classList.add('cracking');
+  setTimeout(()=>{
+    introOverlay.classList.add('opened');
+    launchConfetti(180);
+    setTimeout(()=> spawnFirework(W*0.3, H*0.3), 300);
+    setTimeout(()=> spawnFirework(W*0.7, H*0.28), 650);
+    setTimeout(()=> spawnFirework(W*0.5, H*0.35), 1000);
+    setTimeout(typeWriter, 500);
+    // start music automatically since this is a direct user click
+    bgMusic.play().then(()=>{
+      isPlaying = true;
+      vinylDisc.classList.add('playing');
+      vinylLabel.textContent = 'Birthday Melody';
+    }).catch(()=>{ /* file missing or blocked — silently ignore */ });
+  }, 550);
+}
+waxSeal.addEventListener('click', openInvitation);
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('in-view'); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el=> revealObserver.observe(el));
+
+// Curtain reveal triggers once the finale section scrolls into view
+const finale = document.getElementById('finale');
+const finaleObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{ if(entry.isIntersecting){ finale.classList.add('opened'); } });
+}, { threshold: 0.4 });
+finaleObserver.observe(finale);
+
+/* ============================================================
+   TYPING ANIMATION
+   ============================================================ */
+// EDIT ME: change this line to change the typed message in the hero section
+const typingMessage = "A friend like you comes once in a lifetime — today, the celebration is all yours. 💫";
+const typingEl = document.getElementById('typingText');
+let typeIndex = 0;
+function typeWriter(){
+  if(typeIndex <= typingMessage.length){
+    typingEl.innerHTML = typingMessage.slice(0, typeIndex) + '<span class="cursor-blink">&nbsp;</span>';
+    typeIndex++;
+    setTimeout(typeWriter, 45);
+  } else {
+    typingEl.innerHTML = typingMessage + '<span class="cursor-blink">&nbsp;</span>';
+  }
+}
+
+/* ============================================================
+   GALLERY PHOTOS DATA
+   ------------------------------------------------------------
+   EDIT ME: swap the "img" links for your own photos of Rimjhim
+   (e.g. "photos/rimjhim1.jpg"). Keep between 3 and 5 entries.
+   ============================================================ */
+const galleryPhotos = [
+  { img: "R1.png", title: "Endless Laughter", sub: "ONE OF MY FAVORITE MEMORIES" },
+  { img: "R2.png", title: "That Perfect Day", sub: "WE STILL TALK ABOUT THIS ONE" },
+  { img: "R3.png", title: "Just Us", sub: "SIMPLE MOMENTS, BIG MEMORIES" },
+  
+];
+const galleryGrid = document.getElementById('galleryGrid');
+galleryPhotos.forEach(photo=>{
+  const card = document.createElement('div');
+  card.className = 'polaroid reveal';
+  card.innerHTML = `
+    <div class="tape"></div>
+    <img src="${photo.img}" alt="${photo.title}" loading="lazy">
+    <div class="polaroid-caption">
+      <div class="cap-title">${photo.title}</div>
+      <div class="cap-sub">${photo.sub}</div>
+    </div>
+  `;
+  galleryGrid.appendChild(card);
+  revealObserver.observe(card);
+});
+
+/* ============================================================
+   CANVAS SIZING
+   ============================================================ */
+const sparkCanvas = document.getElementById('sparkCanvas');
+const sctx = sparkCanvas.getContext('2d');
+const fireworksCanvas = document.getElementById('fireworksCanvas');
+const fctx = fireworksCanvas.getContext('2d');
+const confettiCanvas = document.getElementById('confettiCanvas');
+const cctx = confettiCanvas.getContext('2d');
+let W, H;
+function resizeAll(){
+  W = window.innerWidth; H = window.innerHeight;
+  [sparkCanvas, fireworksCanvas, confettiCanvas].forEach(c=>{ c.width = W; c.height = H; });
+}
+window.addEventListener('resize', resizeAll);
+resizeAll();
+
+/* ============================================================
+   BACKGROUND — glowing stars + floating hearts + drifting particles
+   ============================================================ */
+const stars = Array.from({length: 100}, ()=>({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.6+0.4, tw: Math.random()*Math.PI*2, speed: Math.random()*0.02+0.005 }));
+const heartsFloat = Array.from({length: 13}, ()=>({ x: Math.random()*W, y: H + Math.random()*H, size: Math.random()*13+9, speed: Math.random()*0.4+0.2, drift: Math.random()*0.6-0.3, opacity: Math.random()*0.45+0.25 }));
+const dustParticles = Array.from({length: 40}, ()=>({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.2+0.3, vy: Math.random()*0.15+0.05, opacity: Math.random()*0.3+0.1 }));
+
+function drawHeart(ctx,x,y,size,opacity){
+  ctx.save(); ctx.globalAlpha = opacity; ctx.translate(x,y); ctx.scale(size/16, size/16);
+  ctx.beginPath();
+  ctx.moveTo(0,4);
+  ctx.bezierCurveTo(0,-2,-8,-2,-8,4);
+  ctx.bezierCurveTo(-8,10,0,14,0,18);
+  ctx.bezierCurveTo(0,14,8,10,8,4);
+  ctx.bezierCurveTo(8,-2,0,-2,0,4);
+  ctx.fillStyle = '#e0559e'; ctx.shadowColor = '#e0559e'; ctx.shadowBlur = 12; ctx.fill();
+  ctx.restore();
+}
+
+function animateBackground(){
+  sctx.clearRect(0,0,W,H);
+  stars.forEach(s=>{
+    s.tw += s.speed;
+    const alpha = 0.5 + Math.sin(s.tw)*0.5;
+    sctx.beginPath(); sctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    sctx.fillStyle = `rgba(212,175,55,${alpha})`; sctx.shadowColor = '#d4af37'; sctx.shadowBlur = 6; sctx.fill();
+  });
+  dustParticles.forEach(p=>{
+    p.y -= p.vy; if(p.y < 0){ p.y = H; p.x = Math.random()*W; }
+    sctx.beginPath(); sctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    sctx.fillStyle = `rgba(247,221,143,${p.opacity})`; sctx.fill();
+  });
+  heartsFloat.forEach(h=>{
+    h.y -= h.speed; h.x += h.drift*0.3;
+    if(h.y < -20){ h.y = H+20; h.x = Math.random()*W; }
+    drawHeart(sctx, h.x, h.y, h.size, h.opacity);
+  });
+  requestAnimationFrame(animateBackground);
+}
+animateBackground();
+
+/* ============================================================
+   CONFETTI
+   ============================================================ */
+const confettiColors = ['#e0559e','#d4af37','#f7dd8f','#ffffff','#4a1a75'];
+let confettiPieces = [];
+function launchConfetti(count=160){
+  for(let i=0;i<count;i++){
+    confettiPieces.push({
+      x: Math.random()*W, y: -20 - Math.random()*H*0.3,
+      w: Math.random()*8+4, h: Math.random()*12+6,
+      color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+      speedY: Math.random()*3+2, speedX: Math.random()*2-1,
+      rotation: Math.random()*360, rotSpeed: Math.random()*8-4, life:0
+    });
+  }
+}
+function animateConfetti(){
+  cctx.clearRect(0,0,W,H);
+  confettiPieces.forEach(p=>{
+    p.y += p.speedY; p.x += p.speedX; p.rotation += p.rotSpeed; p.life++;
+    cctx.save(); cctx.translate(p.x, p.y); cctx.rotate(p.rotation * Math.PI/180);
+    cctx.fillStyle = p.color; cctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); cctx.restore();
+  });
+  confettiPieces = confettiPieces.filter(p=> p.y < H+40 && p.life < 600);
+  requestAnimationFrame(animateConfetti);
+}
+animateConfetti();
+
+/* ============================================================
+   FIREWORKS
+   ============================================================ */
+let fireworkParticles = [];
+const fireworkColors = ['#e0559e','#d4af37','#f7dd8f','#ffffff','#a86bd8'];
+function spawnFirework(x, y){
+  const count = 55;
+  const color = fireworkColors[Math.floor(Math.random()*fireworkColors.length)];
+  for(let i=0;i<count;i++){
+    const angle = (Math.PI*2*i)/count;
+    const speed = Math.random()*4+2;
+    fireworkParticles.push({ x, y, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed, alpha:1, color, size: Math.random()*2.4+1.2 });
+  }
+}
+function animateFireworks(){
+  fctx.clearRect(0,0,W,H);
+  fctx.globalCompositeOperation = 'lighter';
+  fireworkParticles.forEach(p=>{
+    p.x += p.vx; p.y += p.vy; p.vy += 0.045; p.alpha -= 0.012;
+    fctx.beginPath(); fctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+    fctx.fillStyle = p.color; fctx.globalAlpha = Math.max(p.alpha,0);
+    fctx.shadowColor = p.color; fctx.shadowBlur = 10; fctx.fill();
+  });
+  fctx.globalAlpha = 1; fctx.globalCompositeOperation = 'source-over';
+  fireworkParticles = fireworkParticles.filter(p=> p.alpha > 0);
+  requestAnimationFrame(animateFireworks);
+}
+animateFireworks();
+
+document.getElementById('fireworksBtn').addEventListener('click', ()=>{
+  for(let i=0;i<6;i++){
+    setTimeout(()=>{ spawnFirework(Math.random()*W, H*0.2 + Math.random()*H*0.3); }, i*260);
+  }
+  launchConfetti(120);
+});
+document.getElementById('blowBtn').addEventListener('click', ()=>{
+  const cakeRect = document.getElementById('cake3d').getBoundingClientRect();
+  spawnFirework(cakeRect.left + cakeRect.width/2, cakeRect.top + 40);
+  launchConfetti(60);
+});
+
+/* ============================================================
+   MUSIC — vinyl disc play/pause toggle
+   ============================================================ */
+vinylDisc.addEventListener('click', ()=>{
+  if(isPlaying){
+    bgMusic.pause();
+    vinylDisc.classList.remove('playing');
+    vinylLabel.textContent = 'Tap disc to play';
+  } else {
+    bgMusic.play().catch(()=>{ /* file missing or blocked — silently ignore */ });
+    vinylDisc.classList.add('playing');
+    vinylLabel.textContent = 'Birthday Melody';
+  }
+  isPlaying = !isPlaying;
+});
+</script>
+</body>
+</html>

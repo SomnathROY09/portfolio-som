@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday Rimjhim Jha ❤️</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+
+body{
+
+background:
+linear-gradient(135deg,#090014,#4b0082,#ff1493);
+
+color:white;
+
+font-family:Poppins,sans-serif;
+
+overflow-x:hidden;
+
+}
+
+
+/* Background stars */
+
+.star{
+
+position:fixed;
+
+width:5px;
+height:5px;
+
+background:#ffd700;
+
+border-radius:50%;
+
+animation:twinkle 3s infinite;
+
+}
+
+
+@keyframes twinkle{
+
+50%{
+opacity:.2;
+transform:scale(2);
+}
+
+}
+
+
+
+.container{
+
+width:92%;
+
+max-width:800px;
+
+margin:auto;
+
+padding:30px 0;
+
+}
+
+
+
+.card{
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.2);
+
+border-radius:30px;
+
+padding:35px 20px;
+
+margin:30px 0;
+
+text-align:center;
+
+box-shadow:0 0 40px rgba(255,215,0,.35);
+
+animation:show 1.5s ease;
+
+}
+
+
+
+@keyframes show{
+
+from{
+opacity:0;
+transform:translateY(50px);
+}
+
+to{
+opacity:1;
+}
+
+}
+
+
+
+h1{
+
+font-family:Cinzel;
+
+font-size:clamp(35px,8vw,60px);
+
+color:#ffd700;
+
+text-shadow:0 0 25px gold;
+
+}
+
+
+
+h2{
+
+font-family:Cinzel;
+
+margin:20px;
+
+}
+
+
+p{
+
+line-height:1.8;
+
+font-size:17px;
+
+}
+
+
+
+
+/* Cake */
+
+.cake{
+
+font-size:120px;
+
+animation:spin 5s infinite linear;
+
+}
+
+
+@keyframes spin{
+
+0%{
+transform:rotateY(0);
+}
+
+100%{
+transform:rotateY(360deg);
+}
+
+}
+
+
+
+
+button{
+
+padding:15px 35px;
+
+border:none;
+
+border-radius:40px;
+
+background:linear-gradient(45deg,#ffd700,#ff69b4);
+
+color:white;
+
+font-size:18px;
+
+margin:15px;
+
+cursor:pointer;
+
+}
+
+
+
+
+/* Gallery */
+
+
+.gallery{
+
+display:flex;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+
+.gallery img{
+
+width:150px;
+
+height:150px;
+
+object-fit:cover;
+
+border-radius:25px;
+
+margin:10px;
+
+border:3px solid gold;
+
+transition:.5s;
+
+}
+
+
+.gallery img:hover{
+
+transform:scale(1.15) rotate(5deg);
+
+}
+
+
+
+
+
+/* Hearts */
+
+
+.heart{
+
+position:fixed;
+
+top:-30px;
+
+font-size:25px;
+
+animation:fall 6s linear;
+
+}
+
+
+@keyframes fall{
+
+to{
+
+transform:translateY(110vh);
+
+}
+
+}
+
+
+
+
+/* Firework */
+
+
+.fire{
+
+position:fixed;
+
+width:10px;
+
+height:10px;
+
+background:gold;
+
+border-radius:50%;
+
+animation:boom 1.5s;
+
+}
+
+
+@keyframes boom{
+
+to{
+
+transform:scale(20);
+
+opacity:0;
+
+}
+
+}
+
+
+
+
+#typing{
+
+min-height:130px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+
+padding:30px;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<audio id="song" loop>
+
+<!-- Replace birthday.mp3 with your own song -->
+
+<source src="birthday-melody.mp3">
+
+</audio>
+
+
+
+
+<div class="container">
+
+
+
+<section class="card">
+
+
+<h1>
+Happy Birthday Rimjhim Jha 🎂❤️
+</h1>
+
+
+<h2>
+19 July 🎉
+</h2>
+
+
+<div class="cake">
+🎂
+</div>
+
+
+<p id="typing"></p>
+
+
+<button onclick="music()">
+🎵 Play Birthday Music
+</button>
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+💖 Friendship Message
+</h2>
+
+
+<p>
+
+Dear Rimjhim, you are not just a friend,
+you are a wonderful part of my life.
+May your birthday bring endless happiness,
+success, love, and unforgettable memories.
+Keep smiling, keep shining,
+and always follow your dreams.
+Happy Birthday ❤️
+
+</p>
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+📸 Beautiful Memories
+</h2>
+
+
+<div class="gallery">
+
+
+<img src="R1.png">
+
+<img src="R2.png">
+
+<img src="R3.png">
+
+<img src="R4.png">
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+✨ Special Wish
+</h2>
+
+
+<p>
+
+May every new chapter of your life be
+filled with happiness, positivity,
+and success.
+
+Always stay the amazing person you are.
+
+❤️ Happy Birthday Rimjhim ❤️
+
+</p>
+
+
+</section>
+
+
+
+</div>
+
+
+
+<footer>
+
+Made with ❤️ specially for Rimjhim Jha
+
+</footer>
+
+
+
+
+<script>
+
+
+// Typing effect
+
+
+let text="Dear Rimjhim, you are a special friend who brings happiness and positivity into life. May your smile always shine brighter than stars. ❤️";
+
+
+let i=0;
+
+
+function typing(){
+
+if(i<text.length){
+
+document.getElementById("typing").innerHTML+=text.charAt(i);
+
+i++;
+
+setTimeout(typing,50);
+
+}
+
+}
+
+typing();
+
+
+
+
+
+// Music
+
+
+function music(){
+
+document.getElementById("song").play();
+
+}
+
+
+
+
+
+// Hearts
+
+
+setInterval(()=>{
+
+let h=document.createElement("div");
+
+h.className="heart";
+
+h.innerHTML="❤️";
+
+h.style.left=Math.random()*100+"%";
+
+document.body.appendChild(h);
+
+
+setTimeout(()=>h.remove(),6000);
+
+
+},400);
+
+
+
+
+
+
+// Fireworks
+
+
+setInterval(()=>{
+
+let f=document.createElement("div");
+
+f.className="fire";
+
+f.style.left=Math.random()*100+"%";
+
+f.style.top=Math.random()*70+"%";
+
+
+document.body.appendChild(f);
+
+
+setTimeout(()=>f.remove(),1500);
+
+
+},700);
+
+
+
+
+
+
+// Stars
+
+
+for(let i=0;i<80;i++){
+
+let s=document.createElement("div");
+
+s.className="star";
+
+s.style.left=Math.random()*100+"%";
+
+s.style.top=Math.random()*100+"%";
+
+document.body.appendChild(s);
+
+}
+
+
+
+</script>
+
+
+
+</body>
+
+</html>

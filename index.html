@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Somnath Roy — Founder, Dream Wish Studio | Full Stack Developer</title>
+<meta name="description" content="Somnath Roy — Founder of Dream Wish Studio, Business Development Executive in US IT Staffing, and Full Stack Web Developer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --void:#050505;
+  --midnight:#0B1024;
+  --midnight-2:#0F1530;
+  --violet:#7C3AED;
+  --violet-2:#A78BFA;
+  --cyan:#22D3EE;
+  --white:#F4F4F7;
+  --glass:rgba(244,244,247,0.045);
+  --glass-border:rgba(244,244,247,0.09);
+  --muted:rgba(244,244,247,0.58);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--void);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  font-weight:400;
+  overflow-x:hidden;
+  cursor:none;
+}
+::selection{background:var(--violet);color:var(--white);}
+h1,h2,h3,h4,.display{font-family:'Space Grotesk',sans-serif;}
+.mono{font-family:'JetBrains Mono',monospace;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+section{position:relative;z-index:2;}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important;}
+  html{scroll-behavior:auto;}
+}
+
+/* ---------- custom cursor ---------- */
+#cursor-dot,#cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);}
+#cursor-dot{width:6px;height:6px;background:var(--cyan);}
+#cursor-ring{width:34px;height:34px;border:1px solid rgba(124,58,237,0.6);transition:width .25s,height .25s,border-color .25s,background .25s;}
+#cursor-ring.hover{width:56px;height:56px;background:rgba(124,58,237,0.12);border-color:var(--cyan);}
+@media (max-width:900px){#cursor-dot,#cursor-ring{display:none;}body{cursor:auto;}}
+
+/* ---------- aurora / particle backdrop ---------- */
+#aurora{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--void);}
+#aurora::before,#aurora::after{content:'';position:absolute;width:60vw;height:60vw;border-radius:50%;filter:blur(120px);opacity:.35;}
+#aurora::before{background:radial-gradient(circle,var(--violet),transparent 60%);top:-20%;left:-10%;animation:drift1 22s ease-in-out infinite;}
+#aurora::after{background:radial-gradient(circle,var(--cyan),transparent 60%);bottom:-25%;right:-10%;animation:drift2 26s ease-in-out infinite;}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(6vw,8vh) scale(1.15);}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-5vw,-6vh) scale(1.1);}}
+canvas#particles{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;}
+
+/* ---------- mouse glow ---------- */
+#mouseglow{position:fixed;top:0;left:0;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(124,58,237,0.10),transparent 70%);transform:translate(-50%,-50%);}
+
+/* ---------- loader ---------- */
+#loader{position:fixed;inset:0;background:var(--void);z-index:10000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity .6s ease,visibility .6s ease;}
+#loader.hide{opacity:0;visibility:hidden;}
+.loader-ring{width:64px;height:64px;border-radius:50%;border:2px solid rgba(244,244,247,0.1);border-top-color:var(--cyan);border-right-color:var(--violet);animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loader-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+
+/* ---------- scroll progress ---------- */
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--cyan));z-index:9998;width:0%;}
+
+/* ---------- glass ---------- */
+.glass{background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:18px;}
+.glow-border{position:relative;}
+.glow-border::before{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;
+  background:linear-gradient(135deg,var(--violet),transparent 30%,transparent 70%,var(--cyan));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.55;pointer-events:none;}
+
+/* ---------- eyebrow ---------- */
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.eyebrow::before{content:'';width:26px;height:1px;background:var(--cyan);display:inline-block;}
+.section-title{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:-0.01em;margin-bottom:14px;}
+.section-sub{color:var(--muted);max-width:560px;font-size:15.5px;line-height:1.7;margin-bottom:56px;}
+
+/* ---------- nav ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:500;padding:18px 0;transition:background .3s,border-color .3s,padding .3s;border-bottom:1px solid transparent;}
+header.scrolled{background:rgba(5,5,5,0.72);backdrop-filter:blur(16px);border-color:var(--glass-border);padding:12px 0;}
+nav{display:flex;align-items:center;justify-content:space-between;}
+.logo-ring{width:44px;height:44px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;}
+.logo-ring::before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,var(--violet),var(--cyan),var(--violet));animation:spin 6s linear infinite;}
+.logo-ring img{position:relative;width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--void);}
+.nav-links{display:flex;gap:30px;list-style:none;}
+.nav-links a{font-size:13.5px;color:var(--muted);position:relative;padding:4px 0;transition:color .25s;}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--cyan);transition:width .25s;}
+.nav-links a:hover{color:var(--white);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{display:flex;align-items:center;gap:14px;}
+.btn{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;padding:11px 22px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;cursor:none;position:relative;overflow:hidden;border:1px solid transparent;transition:transform .25s,box-shadow .25s;}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{background:linear-gradient(135deg,var(--violet),#5B21B6);color:#fff;box-shadow:0 8px 24px -8px rgba(124,58,237,.6);}
+.btn-primary:hover{box-shadow:0 12px 32px -8px rgba(124,58,237,.85);}
+.btn-ghost{border-color:var(--glass-border);color:var(--white);background:rgba(255,255,255,0.02);}
+.btn-ghost:hover{border-color:var(--cyan);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:none;z-index:600;}
+.hamburger span{width:24px;height:2px;background:var(--white);transition:.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+#mobile-menu{position:fixed;inset:0;background:rgba(5,5,5,0.98);backdrop-filter:blur(20px);z-index:490;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;transform:translateY(-100%);transition:transform .5s cubic-bezier(.7,0,.2,1);}
+#mobile-menu.open{transform:translateY(0);}
+#mobile-menu a{font-family:'Space Grotesk',sans-serif;font-size:26px;}
+
+/* ---------- hero ---------- */
+#home{min-height:100vh;display:flex;align-items:center;padding-top:100px;padding-bottom:60px;}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:14px;letter-spacing:.05em;margin-bottom:18px;}
+.hero-name{font-size:clamp(42px,6.4vw,84px);font-weight:700;line-height:1.02;letter-spacing:-0.02em;
+  background:linear-gradient(135deg,#fff 30%,var(--violet-2) 65%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-roles{margin-top:20px;display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:16px;}
+.hero-roles b{color:var(--white);font-weight:500;}
+.type-line{margin-top:26px;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--cyan);min-height:26px;}
+.type-line::after{content:'';display:inline-block;width:2px;height:18px;background:var(--cyan);margin-left:4px;vertical-align:middle;animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px;}
+
+.orbit-frame{position:relative;width:min(380px,90%);aspect-ratio:1;margin:0 auto;}
+.orbit-frame .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(124,58,237,0.35);}
+.orbit-frame .ring.r2{inset:-22px;border-color:rgba(34,211,238,0.25);animation:spin 14s linear infinite;}
+.orbit-frame .ring.r3{inset:-44px;border-color:rgba(124,58,237,0.15);animation:spin 22s linear infinite reverse;}
+.orbit-frame .core{position:absolute;inset:26px;border-radius:50%;overflow:hidden;box-shadow:0 0 70px -10px rgba(124,58,237,.55),0 0 120px -20px rgba(34,211,238,.35);animation:float 5s ease-in-out infinite;}
+.orbit-frame .core img{width:100%;height:100%;object-fit:cover;}
+.orbit-frame .conic{position:absolute;inset:18px;border-radius:50%;padding:2px;background:conic-gradient(from 0deg,var(--violet),var(--cyan),var(--violet));animation:spin 5s linear infinite;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+.orbit-tag{position:absolute;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;padding:6px 12px;border-radius:999px;background:rgba(5,5,5,0.7);border:1px solid var(--glass-border);backdrop-filter:blur(8px);}
+.orbit-tag.t1{top:0;left:-6%;}
+.orbit-tag.t2{bottom:8%;right:-10%;}
+.orbit-tag.t3{bottom:-4%;left:12%;}
+
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;}
+.scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--cyan),transparent);animation:scrolldown 1.8s ease-in-out infinite;}
+@keyframes scrolldown{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(36px);}
+
+/* ---------- about ---------- */
+#about{padding:140px 0;}
+.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start;}
+.about-copy p{color:var(--muted);line-height:1.85;font-size:15.5px;margin-bottom:18px;}
+.about-copy b{color:var(--white);font-weight:600;}
+.pillar{display:flex;gap:14px;padding:18px 0;border-top:1px solid var(--glass-border);}
+.pillar:last-child{border-bottom:1px solid var(--glass-border);}
+.pillar .num{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:13px;padding-top:2px;}
+.pillar h4{font-size:15.5px;margin-bottom:5px;font-weight:600;}
+.pillar p{color:var(--muted);font-size:13.5px;line-height:1.6;}
+
+/* ---------- experience timeline ---------- */
+#experience{padding:120px 0;}
+.timeline{position:relative;padding-left:38px;}
+.timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:1px;background:linear-gradient(var(--violet),var(--cyan),transparent);}
+.tl-item{position:relative;padding-bottom:56px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot{position:absolute;left:-38px;top:4px;width:17px;height:17px;border-radius:50%;background:var(--void);border:2px solid var(--cyan);box-shadow:0 0 0 4px rgba(34,211,238,0.08);}
+.tl-card{padding:28px 30px;}
+.tl-role{font-size:19px;font-weight:600;margin-bottom:3px;}
+.tl-org{color:var(--violet-2);font-size:13.5px;font-family:'JetBrains Mono',monospace;margin-bottom:16px;}
+.tl-list{display:flex;flex-wrap:wrap;gap:9px;}
+.tl-list span{font-size:12px;color:var(--muted);background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);padding:6px 12px;border-radius:999px;}
+
+/* ---------- skills ---------- */
+#skills{padding:120px 0;}
+.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+.skill-card{padding:26px 22px;transition:transform .3s,border-color .3s;}
+.skill-card:hover{transform:translateY(-6px);border-color:rgba(124,58,237,.5);}
+.skill-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(34,211,238,.18));display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);}
+.skill-card h4{font-size:15px;margin-bottom:12px;font-weight:600;}
+.tag-row{display:flex;flex-wrap:wrap;gap:7px;}
+.tag-row span{font-size:11.5px;color:var(--muted);border:1px solid var(--glass-border);padding:5px 10px;border-radius:8px;}
+
+/* ---------- projects ---------- */
+#projects{padding:120px 0;}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.proj-card{overflow:hidden;position:relative;transition:transform .35s;}
+.proj-card:hover{transform:translateY(-8px);}
+.proj-media{height:190px;position:relative;background:linear-gradient(135deg,var(--midnight),var(--midnight-2));display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.proj-media::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(124,58,237,.35),transparent 55%),radial-gradient(circle at 80% 80%,rgba(34,211,238,.3),transparent 55%);}
+.proj-media span{position:relative;font-family:'Space Grotesk',sans-serif;font-size:15px;color:rgba(244,244,247,.5);letter-spacing:.04em;}
+.proj-body{padding:22px 24px 26px;}
+.proj-body h4{font-size:17px;margin-bottom:6px;}
+.proj-body p{color:var(--muted);font-size:13.5px;line-height:1.6;margin-bottom:14px;}
+.proj-links{display:flex;gap:10px;margin-top:14px;}
+.proj-links a{font-size:12.5px;font-family:'JetBrains Mono',monospace;padding:8px 14px;border-radius:8px;border:1px solid var(--glass-border);}
+.proj-links a:hover{border-color:var(--cyan);color:var(--cyan);}
+
+/* ---------- dream wish studio ---------- */
+#dws{padding:130px 0;position:relative;}
+.dws-panel{padding:60px;overflow:hidden;position:relative;}
+.dws-top{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-bottom:60px;}
+.dws-top p{color:var(--muted);line-height:1.85;font-size:15.5px;margin-bottom:16px;}
+.dws-services{display:flex;flex-wrap:wrap;gap:10px;}
+.dws-services span{font-size:12.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--glass-border);color:var(--muted);}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.stat{text-align:center;padding:26px 10px;border-radius:14px;border:1px solid var(--glass-border);position:relative;}
+.stat .n{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:var(--white);background:linear-gradient(135deg,var(--cyan),var(--violet-2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .l{font-size:12px;color:var(--muted);margin-top:6px;font-family:'JetBrains Mono',monospace;letter-spacing:.05em;}
+
+/* ---------- services ---------- */
+#services{padding:120px 0;}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.svc-card{padding:30px 26px;transition:transform .3s;}
+.svc-card:hover{transform:translateY(-6px);}
+.svc-card .idx{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);margin-bottom:18px;}
+.svc-card h4{font-size:16.5px;margin-bottom:8px;}
+.svc-card p{font-size:13.5px;color:var(--muted);line-height:1.6;}
+
+/* ---------- achievements ---------- */
+#achievements{padding:120px 0;}
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.ach-card{padding:26px;text-align:left;}
+.ach-card .yr{font-family:'JetBrains Mono',monospace;color:var(--violet-2);font-size:12px;margin-bottom:10px;}
+.ach-card h4{font-size:15.5px;margin-bottom:8px;}
+.ach-card p{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ---------- testimonials ---------- */
+#testimonials{padding:120px 0;}
+.t-track{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;}
+.t-track::-webkit-scrollbar{height:5px;}
+.t-track::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:10px;}
+.t-card{min-width:340px;scroll-snap-align:start;padding:30px;}
+.t-quote{font-size:14.5px;color:var(--muted);line-height:1.75;margin-bottom:22px;}
+.t-person{display:flex;align-items:center;gap:12px;}
+.t-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;}
+.t-person h5{font-size:13.5px;}
+.t-person span{font-size:11.5px;color:var(--muted);}
+
+/* ---------- blog ---------- */
+#blog{padding:120px 0;}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.blog-card{padding:0;overflow:hidden;transition:transform .3s;}
+.blog-card:hover{transform:translateY(-6px);}
+.blog-top{height:130px;background:linear-gradient(135deg,var(--midnight-2),var(--midnight));position:relative;display:flex;align-items:center;padding:0 22px;}
+.blog-top span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:.1em;}
+.blog-body{padding:22px 24px 26px;}
+.blog-body h4{font-size:15.5px;margin-bottom:8px;line-height:1.4;}
+.blog-body p{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ---------- contact ---------- */
+#contact{padding:130px 0;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;}
+.form-field{margin-bottom:18px;}
+.form-field label{display:block;font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-bottom:8px;letter-spacing:.05em;}
+.form-field input,.form-field textarea{width:100%;background:rgba(255,255,255,0.02);border:1px solid var(--glass-border);border-radius:10px;padding:13px 16px;color:var(--white);font-family:'Inter',sans-serif;font-size:14px;transition:border-color .25s;outline:none;}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--cyan);}
+.contact-info{display:flex;flex-direction:column;gap:20px;}
+.info-row{display:flex;gap:16px;align-items:flex-start;padding:20px;}
+.info-row .ic{width:38px;height:38px;border-radius:10px;background:rgba(124,58,237,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:14px;}
+.info-row h5{font-size:13.5px;margin-bottom:3px;}
+.info-row p{font-size:13px;color:var(--muted);}
+.social-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px;}
+.social-card{padding:20px;text-align:center;transition:transform .3s,border-color .3s;}
+.social-card:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 0 30px -10px rgba(34,211,238,.4);}
+.social-card .ic{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);margin-bottom:8px;}
+.social-card span{font-size:12.5px;color:var(--muted);}
+
+/* ---------- footer ---------- */
+footer{padding:70px 0 34px;border-top:1px solid var(--glass-border);}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;margin-bottom:50px;}
+.foot-brand{display:flex;gap:16px;align-items:center;max-width:340px;}
+.foot-brand img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--glass-border);}
+.foot-brand p{color:var(--muted);font-size:13px;line-height:1.6;margin-top:4px;}
+.foot-links{display:flex;gap:60px;flex-wrap:wrap;}
+.foot-col h5{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--cyan);letter-spacing:.1em;margin-bottom:16px;text-transform:uppercase;}
+.foot-col a{display:block;font-size:13.5px;color:var(--muted);margin-bottom:10px;transition:color .2s;}
+.foot-col a:hover{color:var(--white);}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding-top:26px;border-top:1px solid var(--glass-border);}
+.foot-bottom p{font-size:12.5px;color:var(--muted);}
+
+/* ---------- theme toggle ---------- */
+.theme-toggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:none;}
+
+/* ---------- light theme override ---------- */
+body.light{--void:#F5F5F7;--midnight:#E9E9F2;--midnight-2:#E2E2EE;--white:#0B0B10;--muted:rgba(11,11,16,.6);--glass:rgba(11,11,16,0.03);--glass-border:rgba(11,11,16,0.09);}
+body.light #aurora{opacity:.5;}
+body.light .hero-name{background:linear-gradient(135deg,#0B0B10 30%,var(--violet) 65%,#0891B2 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .hero-grid,.about-grid,.dws-top,.contact-grid{grid-template-columns:1fr;}
+  .skill-grid{grid-template-columns:repeat(2,1fr);}
+  .proj-grid,.svc-grid,.ach-grid,.blog-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-row{grid-template-columns:repeat(2,1fr);}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .orbit-frame{margin-top:50px;}
+}
+@media (max-width:620px){
+  .wrap{padding:0 20px;}
+  .skill-grid,.proj-grid,.svc-grid,.ach-grid,.blog-grid,.stat-row{grid-template-columns:1fr;}
+  .dws-panel{padding:34px 24px;}
+  .foot-top{flex-direction:column;}
+}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="loader-ring"></div><div class="loader-label">Loading experience</div></div>
+<div id="progress"></div>
+<div id="aurora"></div>
+<canvas id="particles"></canvas>
+<div id="mouseglow"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+
+<header id="site-header">
+  <div class="wrap">
+    <nav>
+      <a href="#home" class="logo-ring" aria-label="Home">
+        <img src="img/Headshot.jpeg" alt="Somnath Roy">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#dws">Dream Wish Studio</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">◐</button>
+        <a href="#contact" class="btn btn-primary">Hire Me</a>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div id="mobile-menu">
+  <a href="#home">Home</a><a href="#about">About</a><a href="#experience">Experience</a>
+  <a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#dws">Dream Wish Studio</a>
+  <a href="#services">Services</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="hero-eyebrow">Hi, I'm</div>
+      <h1 class="hero-name">Somnath Roy</h1>
+      <div class="hero-roles">
+        <div><b>Founder</b> — Dream Wish Studio</div>
+        <div><b>Business Development Executive</b> — US IT Staffing</div>
+        <div><b>Full Stack Web Developer</b> &amp; Future Tech Creator</div>
+      </div>
+      <div class="type-line" id="typeline"></div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary">Hire Me</a>
+        <a href="/resume-somnath-roy.pdf" class="btn btn-ghost">Download Resume</a>
+        <a href="project/index.html" class="btn btn-ghost">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Let's Connect</a>
+      </div>
+    </div>
+    <div class="orbit-frame">
+      <div class="ring r3"></div>
+      <div class="ring r2"></div>
+      <div class="conic"></div>
+      <div class="core"><img src="img/Headshot.jpeg" alt="Somnath Roy portrait"></div>
+      <div class="orbit-tag t1 mono">Founder</div>
+      <div class="orbit-tag t2 mono">Developer</div>
+      <div class="orbit-tag t3 mono">BizDev</div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><div class="line"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="eyebrow reveal">About</div>
+      <h2 class="section-title reveal">Three disciplines, one direction.</h2>
+      <p class="section-sub reveal" style="margin-bottom:0;">Business, code, and creativity aren't separate lanes for me — they're one practice, applied from different angles.</p>
+    </div>
+    <div class="about-copy">
+      <p class="reveal"><b>I'm Somnath Roy</b> — I work at the intersection of technology and business. By day, I operate as a <b>Business Development Executive in US IT Staffing</b>, where I build client relationships, run lead generation, and manage the full sales cycle from first outreach to closed placement. Alongside that, I design and ship full stack web products, and I founded <b>Dream Wish Studio</b>, a studio building premium, personal digital experiences.</p>
+      <p class="reveal">My journey started with curiosity about how things are built — first the web, then the businesses that run on it. That curiosity turned into a habit of learning in public: shipping real projects, picking up frameworks as I need them, and treating every client conversation as a chance to understand a problem more deeply before I try to solve it.</p>
+      <p class="reveal">My philosophy is simple: <b>build things that feel considered.</b> Whether that's a staffing pipeline, a line of code, or a website someone will open on their wedding day, the standard doesn't change.</p>
+      <div style="margin-top:36px;">
+        <div class="pillar reveal"><div class="num">01</div><div><h4>Career Vision</h4><p>Grow Dream Wish Studio into a recognised name in premium personal-brand and celebration websites, while deepening full stack craft.</p></div></div>
+        <div class="pillar reveal"><div class="num">02</div><div><h4>Mission</h4><p>Bridge the gap between technical execution and business relationships — build the product and the pipeline that sells it.</p></div></div>
+        <div class="pillar reveal"><div class="num">03</div><div><h4>Philosophy</h4><p>Learn by shipping. Every project, client call, and line of code is a rep toward the next level.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow reveal">Experience</div>
+    <h2 class="section-title reveal">Where the work has happened.</h2>
+    <p class="section-sub reveal">A timeline of roles, in the order they built on each other.</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card glass glow-border reveal">
+          <div class="tl-role">Business Development Executive</div>
+          <div class="tl-org">US IT Staffing</div>
+          <div class="tl-list">
+            <span>Client Handling</span><span>Lead Generation</span><span>Market Research</span>
+            <span>Recruitment Coordination</span><span>Relationship Building</span><span>Sales Process</span>
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card glass glow-border reveal">
+          <div class="tl-role">Founder</div>
+          <div class="tl-org">Dream Wish Studio</div>
+          <div class="tl-list">
+            <span>Premium Digital Celebration Sites</span><span>Project Management</span>
+            <span>Creative Direction</span><span>Website Hosting</span><span>Brand Building</span><span>Client Delivery</span>
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card glass glow-border reveal">
+          <div class="tl-role">Full Stack Web Developer</div>
+          <div class="tl-org">Independent Practice</div>
+          <div class="tl-list">
+            <span>Frontend</span><span>Backend</span><span>Database Design</span><span>API Integration</span>
+            <span>Authentication</span><span>Deployment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow reveal">Skills</div>
+    <h2 class="section-title reveal">Toolkit.</h2>
+    <p class="section-sub reveal">The stack and the soft skills that sit underneath every project and every deal.</p>
+    <div class="skill-grid">
+      <div class="skill-card glass reveal"><div class="skill-icon">FE</div><h4>Frontend</h4>
+        <div class="tag-row"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>TypeScript</span><span>React</span><span>Next.js</span><span>Tailwind</span><span>GSAP</span></div></div>
+      <div class="skill-card glass reveal"><div class="skill-icon">BE</div><h4>Backend</h4>
+        <div class="tag-row"><span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>Authentication</span><span>MongoDB</span><span>MySQL</span><span>Firebase</span></div></div>
+      <div class="skill-card glass reveal"><div class="skill-icon">TL</div><h4>Tools</h4>
+        <div class="tag-row"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Figma</span><span>Postman</span><span>Vercel</span><span>Netlify</span></div></div>
+      <div class="skill-card glass reveal"><div class="skill-icon">SS</div><h4>Business &amp; Soft Skills</h4>
+        <div class="tag-row"><span>Sales</span><span>Negotiation</span><span>Client Management</span><span>Presentation</span><span>Leadership</span><span>Problem Solving</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow reveal">Projects</div>
+    <h2 class="section-title reveal">Selected work.</h2>
+    <p class="section-sub reveal">A mix of client sites built through Dream Wish Studio and independent full stack builds.</p>
+    <div class="proj-grid">
+      <div class="proj-card glass glow-border reveal">
+        <div class="proj-media"><span>Luxury Birthday Site</span></div>
+        <div class="proj-body"><h4>Premium Birthday Website</h4><p>A personalised, animated birthday experience — countdown, photo timeline, and a guestbook.</p>
+        <div class="tag-row"><span>React</span><span>Tailwind</span><span>Firebase</span></div>
+        <div class="proj-links"><a href="#">Live Demo</a><a href="#">GitHub</a></div></div>
+      </div>
+      <div class="proj-card glass glow-border reveal">
+        <div class="proj-media"><span>Wedding Website</span></div>
+        <div class="proj-body"><h4>Wedding Website</h4><p>RSVP flow, event schedule, and a photo gallery, wrapped in a soft luxury visual language.</p>
+        <div class="tag-row"><span>Next.js</span><span>MongoDB</span><span>EmailJS</span></div>
+        <div class="proj-links"><a href="#">Live Demo</a><a href="#">GitHub</a></div></div>
+      </div>
+      <div class="proj-card glass glow-border reveal">
+        <div class="proj-media"><span>Anniversary Site</span></div>
+        <div class="proj-body"><h4>Anniversary Website</h4><p>A milestone-driven story page with scroll-triggered animation and a shared memory wall.</p>
+        <div class="tag-row"><span>React</span><span>GSAP</span><span>Node.js</span></div>
+        <div class="proj-links"><a href="#">Live Demo</a><a href="#">GitHub</a></div></div>
+      </div>
+      <div class="proj-card glass glow-border reveal">
+        <div class="proj-media"><span>Business Website</span></div>
+        <div class="proj-body"><h4>Business Website</h4><p>A conversion-focused site for a service business — services, pricing, and lead capture.</p>
+        <div class="tag-row"><span>Next.js</span><span>Express</span><span>MySQL</span></div>
+        <div class="proj-links"><a href="#">Live Demo</a><a href="#">GitHub</a></div></div>
+      </div>
+      <div class="proj-card glass glow-border reveal">
+        <div class="proj-media"><span>Portfolio Website</span></div>
+        <div class="proj-body"><h4>Portfolio Website</h4><p>A minimal, fast personal site with a case-study layout for creative professionals.</p>
+        <div class="tag-row"><span>React</span><span>Framer Motion</span></div>
+        <div class="proj-links"><a href="#">Live Demo</a><a href="#">GitHub</a></div></div>
+      </div>
+      <div class="proj-card glass glow-border reveal">
+        <div class="proj-media"><span>Landing Page</span></div>
+        <div class="proj-body"><h4>Product Landing Page</h4><p>A high-conversion landing page with animated sections and a waitlist form.</p>
+        <div class="tag-row"><span>HTML5</span><span>JavaScript</span><span>Vercel</span></div>
+        <div class="proj-links"><a href="#">Live Demo</a><a href="#">GitHub</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DREAM WISH STUDIO -->
+<section id="dws">
+  <div class="wrap">
+    <div class="dws-panel glass glow-border">
+      <div class="eyebrow reveal">Dream Wish Studio</div>
+      <h2 class="section-title reveal">Luxury digital gifting, built to last longer than the moment.</h2>
+      <div class="dws-top" style="margin-top:40px;">
+        <div class="reveal">
+          <p><b>Mission —</b> Turn life's milestones into premium, personal digital experiences that feel as considered as the occasion itself.</p>
+          <p><b>Vision —</b> Become the studio people think of first for a birthday, wedding, or anniversary website they'll actually want to keep.</p>
+        </div>
+        <div class="reveal">
+          <p style="margin-bottom:14px;"><b>Services</b></p>
+          <div class="dws-services">
+            <span>Birthday Websites</span><span>Wedding Websites</span><span>Anniversary Websites</span>
+            <span>Business Websites</span><span>Portfolio Websites</span><span>Personal Branding</span>
+          </div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat reveal"><div class="n" data-count="40">0</div><div class="l">Happy Clients</div></div>
+        <div class="stat reveal"><div class="n" data-count="55">0</div><div class="l">Projects Delivered</div></div>
+        <div class="stat reveal"><div class="n" data-count="4">0</div><div class="l">Countries Served</div></div>
+        <div class="stat reveal"><div class="n" data-count="98">0</div><div class="l">Client Satisfaction %</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow reveal">Services</div>
+    <h2 class="section-title reveal">What I can build for you.</h2>
+    <p class="section-sub reveal">From a single landing page to a full product — and everything a site needs after launch.</p>
+    <div class="svc-grid">
+      <div class="svc-card glass reveal"><div class="idx mono">01</div><h4>Website Development</h4><p>Full stack builds, from database to deploy.</p></div>
+      <div class="svc-card glass reveal"><div class="idx mono">02</div><h4>Portfolio &amp; Landing Pages</h4><p>Fast, focused pages built to convert.</p></div>
+      <div class="svc-card glass reveal"><div class="idx mono">03</div><h4>Business Websites</h4><p>Sites that represent a brand properly.</p></div>
+      <div class="svc-card glass reveal"><div class="idx mono">04</div><h4>UI/UX Design</h4><p>Interfaces that are clear before they're pretty.</p></div>
+      <div class="svc-card glass reveal"><div class="idx mono">05</div><h4>Birthday &amp; Wedding Sites</h4><p>Dream Wish Studio's signature celebration builds.</p></div>
+      <div class="svc-card glass reveal"><div class="idx mono">06</div><h4>Website Redesign</h4><p>Modernising an existing site without losing what works.</p></div>
+      <div class="svc-card glass reveal"><div class="idx mono">07</div><h4>SEO Optimization</h4><p>Sites that are built to be found.</p></div>
+      <div class="svc-card glass reveal"><div class="idx mono">08</div><h4>Maintenance &amp; Hosting</h4><p>Ongoing upkeep, hosting setup, and support.</p></div>
+      <div class="svc-card glass reveal"><div class="idx mono">09</div><h4>GitHub Deployment</h4><p>Clean CI/CD and deployment pipelines.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="wrap">
+    <div class="eyebrow reveal">Achievements</div>
+    <h2 class="section-title reveal">Learning, credentialed.</h2>
+    <p class="section-sub reveal">A running record of courses, certificates, and milestones along the way.</p>
+    <div class="ach-grid">
+      <div class="ach-card glass reveal"><div class="yr">Certificate</div><h4>Effective Business Websites — HP LIFE</h4><p>Completed coursework on building websites that serve a real business goal.</p></div>
+      <div class="ach-card glass reveal"><div class="yr">Certificate</div><h4>AI for Beginners — HP LIFE</h4><p>Foundational training on applying AI tools in everyday work.</p></div>
+      <div class="ach-card glass reveal"><div class="yr">In Progress</div><h4>Python &amp; Cybersecurity Fundamentals</h4><p>Self-directed study covering file I/O, core security concepts, and threat awareness.</p></div>
+      <div class="ach-card glass reveal"><div class="yr">Founder</div><h4>Dream Wish Studio Launch</h4><p>Founded and began delivering premium celebration and business websites to clients.</p></div>
+      <div class="ach-card glass reveal"><div class="yr">Ongoing</div><h4>Full Stack Project Portfolio</h4><p>A growing set of shipped React / Next.js / Node projects.</p></div>
+      <div class="ach-card glass reveal"><div class="yr">Certificate</div><h4>Sanskrit Education Program</h4><p>Certificate from an All India Sanskrit School Education program.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="eyebrow reveal">Testimonials</div>
+    <h2 class="section-title reveal">What clients say.</h2>
+    <p class="section-sub reveal">Swipe through — early feedback from Dream Wish Studio clients and collaborators.</p>
+    <div class="t-track">
+      <div class="t-card glass glow-border reveal"><p class="t-quote">"Somnath turned our anniversary idea into an actual website in days — the kind of thing you keep open just to look at."</p>
+        <div class="t-person"><div class="t-avatar">R</div><div><h5>R. Sharma</h5><span>Client, Anniversary Website</span></div></div></div>
+      <div class="t-card glass glow-border reveal"><p class="t-quote">"He understood exactly what we wanted for the wedding site before we could fully explain it ourselves."</p>
+        <div class="t-person"><div class="t-avatar">A</div><div><h5>A. Verma</h5><span>Client, Wedding Website</span></div></div></div>
+      <div class="t-card glass glow-border reveal"><p class="t-quote">"Responsive, clear communicator, and the final build was well beyond what we expected for the price."</p>
+        <div class="t-person"><div class="t-avatar">K</div><div><h5>K. Das</h5><span>Client, Business Website</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="wrap">
+    <div class="eyebrow reveal">Blog</div>
+    <h2 class="section-title reveal">Writing.</h2>
+    <p class="section-sub reveal">Notes on web development, US IT staffing, and building a career across both.</p>
+    <div class="blog-grid">
+      <div class="blog-card glass reveal"><div class="blog-top"><span>WEB DEVELOPMENT</span></div>
+        <div class="blog-body"><h4>What I learned shipping my first full stack app</h4><p>A honest breakdown of what took longer than expected.</p></div></div>
+      <div class="blog-card glass reveal"><div class="blog-top"><span>US IT STAFFING</span></div>
+        <div class="blog-body"><h4>How lead generation actually works in staffing</h4><p>The unglamorous parts of the sales process that matter most.</p></div></div>
+      <div class="blog-card glass reveal"><div class="blog-top"><span>CAREER GROWTH</span></div>
+        <div class="blog-body"><h4>Running a business and learning to code at the same time</h4><p>Why doing both made me better at each.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow reveal">Contact</div>
+    <h2 class="section-title reveal">Let's build something.</h2>
+    <p class="section-sub reveal">Open to freelance builds, staffing conversations, and collaborations.</p>
+    <div class="contact-grid">
+      <form class="glass glow-border reveal" style="padding:34px;" onsubmit="event.preventDefault();this.querySelector('.btn').textContent='Message Sent';">
+        <div class="form-field"><label>Name</label><input type="text" required placeholder="Your name"></div>
+        <div class="form-field"><label>Email</label><input type="email" required placeholder="you@email.com"></div>
+        <div class="form-field"><label>Phone</label><input type="tel" placeholder="Optional"></div>
+        <div class="form-field"><label>Message</label><textarea rows="4" required placeholder="Tell me about your project"></textarea></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;">Send Message</button>
+      </form>
+      <div class="contact-info">
+        <div class="info-row glass reveal"><div class="ic">@</div><div><h5>Email</h5><p>somnathsr@gmail.com<span style="opacity:.6">(placeholder)</span></p></div></div>
+        <div class="info-row glass reveal"><div class="ic">#</div><div><h5>Phone</h5><p>+91 6200871722 <span style="opacity:.6">(placeholder)</span></p></div></div>
+        <div class="info-row glass reveal"><div class="ic">◎</div><div><h5>Location</h5><p> Delhi, India</p></div></div>
+        <div class="social-grid">
+          <a href="https://www.linkedin.com/in/somnath-roy-6a11742a3?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-card glass reveal"><div class="ic mono">in</div><span>LinkedIn</span></a>
+          <a href="https://github.com/SomnathROY09" class="social-card glass reveal"><div class="ic mono">gh</div><span>GitHub</span></a>
+          <a href="#" class="social-card glass reveal"><div class="ic mono">ig</div><span>Instagram</span></a>
+          <a href="#" class="social-card glass reveal"><div class="ic mono">yt</div><span>YouTube</span></a>
+          <a href="https://wa.me/916200871722" class="social-card glass reveal"><div class="ic mono">wa</div><span>WhatsApp</span></a>
+          <a href="img/SOMNATH ROY (1).pdf" class="social-card glass reveal"><div class="ic mono">↓</div><span>Resume</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img src="https://placehold.co/120x120/0B1024/22D3EE?text=SR" alt="Somnath Roy">
+        <div>
+          <h3 style="font-size:18px;">Somnath Roy</h3>
+          <p>Founder of Dream Wish Studio. Business Development Executive in US IT Staffing. Full Stack Developer.</p>
+        </div>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col"><h5>Explore</h5>
+          <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#services">Services</a>
+        </div>
+        <div class="foot-col"><h5>Connect</h5>
+          <a href="#">LinkedIn</a><a href="#">GitHub</a><a href="#">Instagram</a><a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year"></span> Somnath Roy. All rights reserved.</p>
+      <p>Designed &amp; Developed by Somnath Roy</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* loader */
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('hide'),400);
+});
+
+/* custom cursor */
+const dot=document.getElementById('cursor-dot'), ring=document.getElementById('cursor-ring'), glow=document.getElementById('mouseglow');
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
+  glow.style.left=mx+'px';glow.style.top=my+'px';
+});
+function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);}
+loop();
+document.querySelectorAll('a,button,.btn,input,textarea').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+});
+
+/* header scroll state + progress bar */
+const header=document.getElementById('site-header'), progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  header.classList.toggle('scrolled',window.scrollY>10);
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  progress.style.width=pct+'%';
+});
+
+/* mobile menu */
+const hamburger=document.getElementById('hamburger'), mobileMenu=document.getElementById('mobile-menu');
+hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hamburger.classList.remove('open');mobileMenu.classList.remove('open');}));
+
+/* theme toggle */
+document.getElementById('theme-toggle').addEventListener('click',()=>document.body.classList.toggle('light'));
+
+/* typing animation */
+const roles=['Full Stack Developer','Business Development Executive','Founder','Creative Problem Solver','JavaScript Developer','React Developer','Tech Entrepreneur'];
+const typeEl=document.getElementById('typeline');
+let ri=0,ci=0,deleting=false;
+function typeLoop(){
+  const word=roles[ri];
+  if(!deleting){
+    ci++;typeEl.textContent=word.slice(0,ci);
+    if(ci===word.length){deleting=true;setTimeout(typeLoop,1200);return;}
+  }else{
+    ci--;typeEl.textContent=word.slice(0,ci);
+    if(ci===0){deleting=false;ri=(ri+1)%roles.length;}
+  }
+  setTimeout(typeLoop,deleting?40:70);
+}
+typeLoop();
+
+/* particles */
+const canvas=document.getElementById('particles'), ctx=canvas.getContext('2d');
+let particles=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+resize();window.addEventListener('resize',resize);
+for(let i=0;i<60;i++){particles.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.6+.4,vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15,o:Math.random()*.5+.15});}
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;
+    if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);
+    ctx.fillStyle=`rgba(167,139,250,${p.o})`;ctx.fill();
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+/* GSAP scroll reveals */
+gsap.registerPlugin(ScrollTrigger);
+document.querySelectorAll('.reveal').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%'}});
+});
+
+/* animated counters */
+document.querySelectorAll('.stat .n').forEach(el=>{
+  const target=+el.dataset.count;
+  ScrollTrigger.create({
+    trigger:el,start:'top 85%',once:true,
+    onEnter:()=>{
+      let obj={v:0};
+      gsap.to(obj,{v:target,duration:1.6,ease:'power2.out',onUpdate:()=>el.textContent=Math.round(obj.v)+(target===98?'%':'+')});
+    }
+  });
+});
+
+/* smooth in-page nav offset */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');
+    if(id.length>1 && document.querySelector(id)){
+      e.preventDefault();
+      window.scrollTo({top:document.querySelector(id).offsetTop-70,behavior:'smooth'});
+    }
+  });
+});
+</script>
+</body>
+</html>
